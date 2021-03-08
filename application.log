@@ -274,3 +274,89 @@ Unauthorized: /api/transactions/1/
 "POST /api/transactions/1/ HTTP/1.1" 401 183
 Unauthorized: /api/transactions/1/
 "GET /api/transactions/1/ HTTP/1.1" 401 183
+Unauthorized: /api/transactions/1/
+"POST /api/transactions/1/ HTTP/1.1" 401 183
+Not Found: /api/transactions/1/
+"POST /api/transactions/1/ HTTP/1.1" 404 23
+Internal Server Error: /api/transactions/1/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\api\views.py", line 49, in get
+    print(r.json())
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\requests\models.py", line 900, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\json\__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"GET /api/transactions/1/ HTTP/1.1" 500 119210
+Not Found: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 404 23
+Not Found: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 404 23
+Internal Server Error: /api/transactions/1/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\api\views.py", line 47, in get
+    access_token = access_token('intellipos')
+UnboundLocalError: local variable 'access_token' referenced before assignment
+"GET /api/transactions/1/ HTTP/1.1" 500 97650
+Unauthorized: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 401 183
+Internal Server Error: /api/transactions/1/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\api\views.py", line 47, in get
+    access_token = access_token('intellipos')
+UnboundLocalError: local variable 'access_token' referenced before assignment
+"GET /api/transactions/1/ HTTP/1.1" 500 97650
+Not Found: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 404 23

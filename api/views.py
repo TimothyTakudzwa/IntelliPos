@@ -2,7 +2,7 @@ from django.shortcuts import render
 from merchant.models import Transaction
 from .serializers import UserSerializer, TransactionSerializer
 from rest_framework import viewsets
-from .helper_functions import access_token
+from .helper_functions import get_access_token
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -43,7 +43,8 @@ class TransactionViewSet(APIView):
             raise Http404
 
     def get(self, request, id, format=None):
-        url = 'http://45.55.44.41:8003/api/v1/keys/'        
+        url = 'http://45.55.44.41:8003/api/v1/keys'      
+        access_token = get_access_token('intellipos')  
         headers = {"Content-Type": "application/json","Authorization": f"access_token {access_token}"}
         r = requests.get(url, headers=headers)
         print(r.json())
