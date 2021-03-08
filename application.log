@@ -1,2 +1,276 @@
 Not Found: /favicon.ico
 "GET /favicon.ico HTTP/1.1" 404 2080
+Not Found: /
+"GET / HTTP/1.1" 404 2029
+Not Found: /api/tras=nsaction/
+"GET /api/tras=nsaction/ HTTP/1.1" 404 3790
+Not Found: /api/transaction/
+"GET /api/transaction/ HTTP/1.1" 404 3782
+Internal Server Error: /api/transactions/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 497, in dispatch
+    self.initial(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 415, in initial
+    self.check_permissions(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 332, in check_permissions
+    if not permission.has_permission(request, self):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\permissions.py", line 229, in has_permission
+    queryset = self._queryset(view)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\permissions.py", line 209, in _queryset
+    ).format(self.__class__.__name__)
+AssertionError: Cannot apply DjangoModelPermissionsOrAnonReadOnly on a view that does not set `.queryset` or have a `.get_queryset()` method.
+"GET /api/transactions/ HTTP/1.1" 500 111621
+Not Found: /api/api-auth/
+"GET /api/api-auth/ HTTP/1.1" 404 4069
+Not Found: /api/api_auth
+"GET /api/api_auth HTTP/1.1" 404 3770
+Not Found: /api/api-auth/
+"GET /api/api-auth/ HTTP/1.1" 404 4069
+Not Found: /accounts/profile/
+"GET /accounts/profile/ HTTP/1.1" 404 2098
+Internal Server Error: /api/transactions/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 497, in dispatch
+    self.initial(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 415, in initial
+    self.check_permissions(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 332, in check_permissions
+    if not permission.has_permission(request, self):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\permissions.py", line 229, in has_permission
+    queryset = self._queryset(view)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\permissions.py", line 209, in _queryset
+    ).format(self.__class__.__name__)
+AssertionError: Cannot apply DjangoModelPermissionsOrAnonReadOnly on a view that does not set `.queryset` or have a `.get_queryset()` method.
+"GET /api/transactions/ HTTP/1.1" 500 111621
+Internal Server Error: /api/transactions/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+TypeError: get() missing 1 required positional argument: 'id'
+"GET /api/transactions/ HTTP/1.1" 500 94154
+Not Found: /api/transactions/1
+"GET /api/transactions/1 HTTP/1.1" 404 3788
+Not Found: /api/transaction
+"GET /api/transaction HTTP/1.1" 404 3779
+Internal Server Error: /api/transactions/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+TypeError: get() missing 1 required positional argument: 'id'
+"GET /api/transactions/ HTTP/1.1" 500 92863
+Internal Server Error: /api/transactions/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+TypeError: get() missing 1 required positional argument: 'id'
+"GET /api/transactions/?id=10 HTTP/1.1" 500 93219
+Internal Server Error: /api/transactions/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+TypeError: get() missing 1 required positional argument: 'id'
+"GET /api/transactions/?id=10 HTTP/1.1" 500 93219
+Internal Server Error: /api/transactions/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+TypeError: get() missing 1 required positional argument: 'id'
+"GET /api/transactions/?id=10 HTTP/1.1" 500 93219
+Not Found: /api/transactions
+"GET /api/transactions?id=10 HTTP/1.1" 404 3803
+Not Found: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 404 23
+Not Found: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 404 23
+Method Not Allowed: /api/transactions/1/
+"POST /api/transactions/1/ HTTP/1.1" 405 41
+Internal Server Error: /api/transactions/1/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+TypeError: post() got an unexpected keyword argument 'id'
+"POST /api/transactions/1/ HTTP/1.1" 500 93867
+Internal Server Error: /api/transactions/1/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+TypeError: post() got an unexpected keyword argument 'id'
+"POST /api/transactions/1/ HTTP/1.1" 500 94184
+Internal Server Error: /api/transactions/1/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+TypeError: post() got an unexpected keyword argument 'id'
+"POST /api/transactions/1/ HTTP/1.1" 500 93920
+Not Found: /api/transactions
+"POST /api/transactions HTTP/1.1" 404 3798
+Not Found: /api/transactions/1/
+"POST /api/transactions/1/ HTTP/1.1" 404 23
+Unauthorized: /api/transactions/1/
+"POST /api/transactions/1/ HTTP/1.1" 401 183
+Internal Server Error: /api/token
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\utils\deprecation.py", line 113, in __call__
+    response = self.process_request(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\middleware\common.py", line 54, in process_request
+    path = self.get_full_path_with_slash(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\middleware\common.py", line 94, in get_full_path_with_slash
+    'url': request.get_host() + new_path,
+RuntimeError: You called this URL via POST, but the URL doesn't end in a slash and you have APPEND_SLASH set. Django can't redirect to the slash URL while maintaining POST data. Change your form to point to 127.0.0.1:8000/api/token/ (note the trailing slash), or set APPEND_SLASH=False in your Django settings.
+"POST /api/token HTTP/1.1" 500 76314
+Bad Request: /api/token/
+"POST /api/token/ HTTP/1.1" 400 79
+Unauthorized: /api/token/
+"POST /api/token/ HTTP/1.1" 401 63
+Not Found: /api/transactions
+"GET /api/transactions?id=10 HTTP/1.1" 404 4173
+Unauthorized: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 401 183
+Not Found: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 404 23
+Unauthorized: /api/transactions/1/
+"POST /api/transactions/1/ HTTP/1.1" 401 183
+Unauthorized: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 401 183
