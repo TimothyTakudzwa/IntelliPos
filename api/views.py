@@ -5,9 +5,12 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+import requests
+import logging
 
 from merchant.models import Transaction
 from merchant.models import User, IntelliPos
+from .models import JWTToken
 from .serializers import UserSerializer, TransactionSerializer
 
 
@@ -34,6 +37,34 @@ class TransactionProcessing(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class DEKViewSet(APIView):
+
+    def get(self, request):
+        key_name = self.request.GET.get('key_name')
+        url = 'http://45.55.44.41:8003/api/v1/keys/dek?key_name=' + key_name
+        token = JWTToken.objects.filter(name='intellipos').first()
+        headers = {"Content-Type": "application/json", "Authorization": f"Bearer {token.access_token}"}
+        r = requests.get(url, headers=headers)
+        if r.status_code == 200:
+            data = r.json()
+            access_token = data['message']
+            message = f"{access_token.encode('ISO-8859-1')}"
+            success = True
+        else:
+            url = 'http://45.55.44.41:8003/api/v1/refresh_token'
+            refresh_token = JWTToken.get_refresh_token('intellipos')
+            headers = {"Content-Type": "application/json", "Authorization": f"Bearer {token.refresh_token}"}
+            r = requests.get(url, headers=headers)
+            data = r.json()
+            if r.status_code == 200:
+                token.access_token = data['access_token']
+                token.save()
+
+            message = 'Failed to get DEK'
+            success = False
+        return JsonResponse(status=200, data={'success':success, 'message':message})
 
 
 class LoginViewSet(APIView):
