@@ -1,11 +1,12 @@
-from django.db import models
-from .constants import BANKS, INDUSTRY_CHOICES, COMPANY_TYPE
-from django.contrib.auth.models import AbstractUser
+import datetime
 
 import bcrypt
+from django.contrib.auth.models import AbstractUser
+from django.db import models
 from django.utils import timezone
 
-import datetime
+from .constants import BANKS, INDUSTRY_CHOICES, COMPANY_TYPE
+
 
 # Create your models here.
 
@@ -19,8 +20,7 @@ class Account(models.Model):
     destination_bank = models.CharField(max_length=100, default='', choices=BANKS)
 
     def __str__(self):
-        return f'{self.account_number} - {self.balance}'
-
+        return f'{self.account_number}'
 
 
 class Merchant(models.Model):
@@ -36,7 +36,7 @@ class Merchant(models.Model):
     account = models.ForeignKey(Account, on_delete=models.PROTECT, related_name='merchant_account', blank=True)
 
     def __str__(self):
-        return f'{str(self.id)} - {str(self.name)}'
+        return f'{str(self.id)} - {str(self.name)} {str(self.address)}'
 
     @classmethod
     def get_model_by_id(cls, id):
@@ -54,17 +54,18 @@ class Merchant(models.Model):
         merchant.phone_number = phone_number
         merchant.save()
 
+
 class User(AbstractUser):
     """
     IntelliPOS Merchant User Model
     """
     merchant = models.ForeignKey(Merchant, on_delete=models.DO_NOTHING, null=True, blank=True)
     first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)    
+    last_name = models.CharField(max_length=30)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=20, default='263')
     role = models.CharField(max_length=20, default='',
-                            choices=(('ADMIN', 'ADMIN'),('TELLER', 'TELLER')))
+                            choices=(('ADMIN', 'ADMIN'), ('TELLER', 'TELLER')))
 
     def __str__(self):
         return self.username
@@ -87,14 +88,15 @@ class User(AbstractUser):
         return username
 
     @classmethod
-    def authenticate(cls, username, password):        
+    def authenticate(cls, username, password):
         user = User.objects.filter(username=username).first()
-        if user is None: 
-            return False   
-        if bcrypt.checkpw(password, user.password.encode("utf-8")):                         
+        if user is None:
+            return False
+        if bcrypt.checkpw(password, user.password.encode("utf-8")):
             return True
         else:
             return False
+
 
 class IntelliPos(models.Model):
     """
@@ -106,16 +108,15 @@ class IntelliPos(models.Model):
     active_user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE, blank=False, null=False)
     is_logged_in = models.BooleanField(default=False)
-    
-
 
     def __str__(self):
         return f'{str(self.id)} - {str(self.pos_id)}'
+
     @classmethod
     def authenticate(cls, username, password, posId, device):
-        
+
         user = User.objects.filter(username=username).first()
-        if user is None: 
+        if user is None:
             return False, 'Username does not exist'
         pos = cls.objects.filter(pos_id=posId).filter(merchant=user.merchant).first()
         if pos is None:
@@ -125,11 +126,10 @@ class IntelliPos(models.Model):
             pos.last_logged_device = device
             pos.last_active_time = datetime.datetime.now()
             pos.is_logged_in = True
-            pos.save()                
+            pos.save()
             return True, 'Login Successful'
         else:
             return False, 'Wrong username / password'
-       
 
 
 class Transaction(models.Model):
@@ -137,9 +137,9 @@ class Transaction(models.Model):
     sender_account = models.CharField(max_length=30, default='', blank=True)
     receiver_account = models.CharField(max_length=30, default='', blank=True)
     destination_bank = models.CharField(max_length=50, default='', blank=True)
-    amount = models.FloatField( default=0.00, blank=True)
+    amount = models.FloatField(default=0.00, blank=True)
     currency = models.CharField(max_length=255, default='USD', blank=True)
     reference = models.CharField(max_length=255, default='', blank=True)
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE, blank=False, null=False)
     pos = models.ForeignKey(IntelliPos, on_delete=models.PROTECT, related_name='writer_merchant')
-    status = models.BooleanField(default=False)   
+    status = models.BooleanField(default=False)

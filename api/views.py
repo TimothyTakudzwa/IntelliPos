@@ -1,16 +1,14 @@
-from django.shortcuts import render
-from merchant.models import Transaction
-from .serializers import UserSerializer, TransactionSerializer
-from rest_framework import viewsets
-from .helper_functions import get_access_token
 from django.http import Http404
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from django.http.response import JsonResponse
 from rest_framework import status
-from merchant.models import User
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-import requests
-import json
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from merchant.models import Transaction
+from merchant.models import User, IntelliPos
+from .serializers import UserSerializer, TransactionSerializer
 
 
 # Create your views here.
@@ -37,13 +35,28 @@ class TransactionProcessing(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class LoginViewSet(APIView):
     """
     Login to Merchant Application Viewset
     """
-    def post(self, request):
-        data = request.data
 
+    def post(self, request):
+        try:
+            data = request.data
+            username = data['username']
+            password = data['password']
+            pos_id = data['posID']
+            device = data['device']
+            # Authenticate
+            authenticated, description = IntelliPos.authenticate(username, password.encode('utf8'), pos_id, device)
+            if authenticated:
+                return JsonResponse(status=200, data={'success': True, 'detail': description})
+            else:
+                return JsonResponse(status=200, data={'success': False, 'detail': description})
+        except Exception as e:
+            print(e)
+            return JsonResponse(status=500, data={'details': 'Invalid Request'})
 
 
 class TransactionViewSet(APIView):
