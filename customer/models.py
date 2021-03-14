@@ -5,6 +5,9 @@ import bcrypt
 
 # Create your models here.
 class Customer(models.Model):
+    """
+    Model Class for IntelliPOS Customers 
+    """
     customer_name = models.CharField(max_length=255, default='')
     nfc_token = models.CharField(max_length=255, default='', blank=True)
     nfc_pin = models.TextField(max_length=255,blank=True, null=True)

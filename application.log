@@ -360,3 +360,201 @@ UnboundLocalError: local variable 'access_token' referenced before assignment
 "GET /api/transactions/1/ HTTP/1.1" 500 97650
 Not Found: /api/transactions/1/
 "GET /api/transactions/1/ HTTP/1.1" 404 23
+Method Not Allowed: /api/token/
+"GET /api/token/ HTTP/1.1" 405 40
+Internal Server Error: /api/token
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\utils\deprecation.py", line 113, in __call__
+    response = self.process_request(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\middleware\common.py", line 54, in process_request
+    path = self.get_full_path_with_slash(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\middleware\common.py", line 94, in get_full_path_with_slash
+    'url': request.get_host() + new_path,
+RuntimeError: You called this URL via POST, but the URL doesn't end in a slash and you have APPEND_SLASH set. Django can't redirect to the slash URL while maintaining POST data. Change your form to point to 127.0.0.1:8000/api/token/ (note the trailing slash), or set APPEND_SLASH=False in your Django settings.
+"POST /api/token HTTP/1.1" 500 74668
+Bad Request: /api/token/
+"POST /api/token/ HTTP/1.1" 400 79
+Bad Request: /api/token/
+"POST /api/token/?username=timothy&password=12345 HTTP/1.1" 400 79
+Unauthorized: /api/token/
+"POST /api/token/?username=timothy&password=12345 HTTP/1.1" 401 63
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2080
+Not Found: /api/token/
+"POST /api/token/?username=timothy&password=12345 HTTP/1.1" 404 4190
+Unauthorized: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 401 58
+Unauthorized: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 401 183
+Unauthorized: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 401 58
+Unauthorized: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 401 183
+Internal Server Error: /api/transactions/1/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\connection.py", line 170, in _new_conn
+    (self._dns_host, self.port), self.timeout, **extra_kw
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\util\connection.py", line 96, in create_connection
+    raise err
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\util\connection.py", line 86, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\connectionpool.py", line 706, in urlopen
+    chunked=chunked,
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\connectionpool.py", line 394, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\connection.py", line 234, in request
+    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\http\client.py", line 1244, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\http\client.py", line 1290, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\http\client.py", line 1239, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\http\client.py", line 1026, in _send_output
+    self.send(msg)
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\http\client.py", line 966, in send
+    self.connect()
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\connection.py", line 200, in connect
+    conn = self._new_conn()
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\connection.py", line 182, in _new_conn
+    self, "Failed to establish a new connection: %s" % e
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x0000025F8D5A5308>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\connectionpool.py", line 756, in urlopen
+    method, url, error=e, _pool=self, _stacktrace=sys.exc_info()[2]
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\util\retry.py", line 573, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='45.55.44.41', port=8003): Max retries exceeded with url: /api/v1/keys (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025F8D5A5308>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\api\views.py", line 57, in get
+    r = requests.get(url, headers=headers)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\requests\api.py", line 76, in get
+    return request('get', url, params=params, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\requests\api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\requests\sessions.py", line 542, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\requests\sessions.py", line 655, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\requests\adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='45.55.44.41', port=8003): Max retries exceeded with url: /api/v1/keys (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025F8D5A5308>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+"GET /api/transactions/1/ HTTP/1.1" 500 219270
+Internal Server Error: /api/transactions/1/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\connection.py", line 170, in _new_conn
+    (self._dns_host, self.port), self.timeout, **extra_kw
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\util\connection.py", line 96, in create_connection
+    raise err
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\util\connection.py", line 86, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\connectionpool.py", line 706, in urlopen
+    chunked=chunked,
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\connectionpool.py", line 394, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\connection.py", line 234, in request
+    super(HTTPConnection, self).request(method, url, body=body, headers=headers)
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\http\client.py", line 1244, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\http\client.py", line 1290, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\http\client.py", line 1239, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\http\client.py", line 1026, in _send_output
+    self.send(msg)
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\http\client.py", line 966, in send
+    self.connect()
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\connection.py", line 200, in connect
+    conn = self._new_conn()
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\connection.py", line 182, in _new_conn
+    self, "Failed to establish a new connection: %s" % e
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x0000025F8D527288>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\connectionpool.py", line 756, in urlopen
+    method, url, error=e, _pool=self, _stacktrace=sys.exc_info()[2]
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\urllib3\util\retry.py", line 573, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='45.55.44.41', port=8003): Max retries exceeded with url: /api/v1/keys (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025F8D527288>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\api\views.py", line 57, in get
+    r = requests.get(url, headers=headers)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\requests\api.py", line 76, in get
+    return request('get', url, params=params, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\requests\api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\requests\sessions.py", line 542, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\requests\sessions.py", line 655, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\requests\adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='45.55.44.41', port=8003): Max retries exceeded with url: /api/v1/keys (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025F8D527288>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+"GET /api/transactions/1/ HTTP/1.1" 500 219271
+Unauthorized: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 401 58
+Unauthorized: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 401 58
+Unauthorized: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 401 58
+Not Found: /api/transactions/1/
+"GET /api/transactions/1/ HTTP/1.1" 404 23

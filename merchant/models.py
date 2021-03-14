@@ -108,7 +108,6 @@ class IntelliPos(models.Model):
     is_logged_in = models.BooleanField(default=False)
     
 
-    # terminal = models.OneToOneField(Terminal, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{str(self.id)} - {str(self.pos_id)}'

@@ -13,7 +13,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('transactions/<int:id>/', views.TransactionViewSet.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')), 
-    path('token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('get_token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
