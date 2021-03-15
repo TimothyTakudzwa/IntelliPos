@@ -1,30 +1,25 @@
+import os
+import uuid
+
+import bcrypt
+
+from django.core.mail import send_mail
 from django.http import Http404
 from django.http.response import JsonResponse
 from rest_framework import status
-from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import requests
-import logging
 
+from merchant.constants import create_account_email_user
 from merchant.models import Transaction
-from merchant.models import User, IntelliPos
+from merchant.models import User, IntelliPos, Merchant
+from .helper_functions import *
 from .models import JWTToken
-from .serializers import UserSerializer, TransactionSerializer
+from .serializers import TransactionSerializer
 
 
 # Create your views here.
-
-class UserViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    """
-    Merchant User ViewSet
-    """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
 class TransactionProcessing(APIView):
     """
     Process an IntelliPOS Transaction
@@ -64,7 +59,96 @@ class DEKViewSet(APIView):
 
             message = 'Failed to get DEK'
             success = False
-        return JsonResponse(status=200, data={'success':success, 'message':message})
+        return JsonResponse(status=200, data={'success': success, 'message': message})
+
+
+class ResetPassword(APIView):
+    def get(self):
+        email = self.request.GET.get('email')
+        user = User.objects.filter(email=email).first()
+        if user is not None:
+            otp = os.random(6)
+            user.otp = otp
+            message = "A password reset was initiated for your account. Please Enter the OTP " + otp + " on the mobile app to reset"
+            user.save()
+            send_mail(
+                'IntelliPOS Password Reset',
+                message,
+                'timothytakudzwa@gmail.com',
+                [email],
+                fail_silently=False,
+            )
+            return JsonResponse(status=200, data={'success': True, 'message': "OTP Sent"})
+        else:
+            return JsonResponse(status=200, data={'success': False, 'message': "Invalid Email"})
+
+    def post(self):
+        data = self.request.POST.get('data')
+        email = self.request.POST.get('email')
+        action = self.request.POST.get('action')
+        user = User.object.filter(email=email).first()
+        if user is not None:
+            if action == 'verify_otp':
+                if data == user.otp:
+                    success = True
+                    message = 'OTP Match'
+                else:
+                    success = False
+                    message = 'OTP Mismatch'
+            else:
+                password = bcrypt.hashpw(data.encode('utf8'), bcrypt.gensalt()).decode()
+                if password_used(user, password):
+                    success = True
+                    message = "Password Updated"
+                else:
+                    success = False
+                    message = "You cannot repeat a password you have used before"
+        else:
+            success = False
+            message = "User Does not Exist"
+        return JsonResponse(status=200, data={'success': success, 'message': message})
+
+
+class RegisterViewSet(APIView):
+    """
+    Register User ViewSet
+    """
+
+    def post(self, request):
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        company_id = request.POST.get('company_id')
+        email = request.POST.get('email_address')
+        merchant = Merchant.objects.filter(id=int(company_id)).first()
+        token = uuid.uuid4().hex[:100]
+        username_exists = User.objects.filter(username=username).exists()
+        email_exists = User.objects.filter(email=email).exists()
+        password = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt()).decode()
+
+        if username_exists:
+            return JsonResponse(status=401, data={'detail': 'Username Exists'})
+        if email_exists:
+            return JsonResponse(status=401, data={'detail': 'Email Exists'})
+
+        user = User(username=username, password=password, token=token, email=email, role='TELLER',
+                    first_name=first_name, last_name=last_name, \
+                    merchant=merchant)
+        user.save()
+        full_name = first_name + ' ' + last_name
+        pos_id = uuid.uuid4().hex[:5]
+        pos = IntelliPos(merchant=merchant, pos_id=pos_id)
+        pos.save()
+
+        send_mail(
+            'IntelliPOS Merchant Account',
+            create_account_email_user.format(full_name, merchant.name, 'TELLER', username, pos_id),
+            'timothytakudzwa@gmail.com',
+            [email],
+            fail_silently=False,
+        )
+        return JsonResponse(status=200, data={'detail': 'User Created Succesfully'})
 
 
 class LoginViewSet(APIView):

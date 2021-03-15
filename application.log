@@ -1269,3 +1269,135 @@ Traceback (most recent call last):
     raise TypeError(f'Object of type {o.__class__.__name__} '
 TypeError: Object of type bytes is not JSON serializable
 "GET /api/get_dek/?key_name=token_key HTTP/1.1" 500 126244
+Method Not Allowed: /api/register/
+"GET /api/register/ HTTP/1.1" 405 40
+Internal Server Error: /api/register
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\utils\deprecation.py", line 113, in __call__
+    response = self.process_request(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\middleware\common.py", line 54, in process_request
+    path = self.get_full_path_with_slash(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\middleware\common.py", line 94, in get_full_path_with_slash
+    'url': request.get_host() + new_path,
+RuntimeError: You called this URL via POST, but the URL doesn't end in a slash and you have APPEND_SLASH set. Django can't redirect to the slash URL while maintaining POST data. Change your form to point to 127.0.0.1:8000/api/register/ (note the trailing slash), or set APPEND_SLASH=False in your Django settings.
+"POST /api/register HTTP/1.1" 500 75537
+Bad Request: /api/register/
+"POST /api/register/ HTTP/1.1" 400 73
+Bad Request: /api/register/
+"POST /api/register/ HTTP/1.1" 400 73
+Bad Request: /api/register/
+"POST /api/register/ HTTP/1.1" 400 73
+Bad Request: /api/register/
+"POST /api/register/ HTTP/1.1" 400 73
+Bad Request: /api/register/
+"POST /api/register/ HTTP/1.1" 400 73
+Bad Request: /api/register/
+"POST /api/register/ HTTP/1.1" 400 73
+Internal Server Error: /api/register/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\api\views.py", line 70, in post
+    print(request.body.json())
+AttributeError: 'bytes' object has no attribute 'json'
+"POST /api/register/ HTTP/1.1" 500 98120
+Internal Server Error: /api/register/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\api\views.py", line 70, in post
+    print(request.body.json())
+AttributeError: 'bytes' object has no attribute 'json'
+"POST /api/register/ HTTP/1.1" 500 98120
+Bad Request: /api/register/
+"POST /api/register/ HTTP/1.1" 400 73
+Internal Server Error: /api/register/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\api\views.py", line 71, in post
+    data = JSONParser().parse(request.data)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\parsers.py", line 65, in parse
+    return json.load(decoded_stream, parse_constant=parse_constant)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\utils\json.py", line 31, in load
+    return json.load(*args, **kwargs)
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\json\__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\codecs.py", line 496, in read
+    newdata = self.stream.read()
+AttributeError: 'QueryDict' object has no attribute 'read'
+"POST /api/register/ HTTP/1.1" 500 116202
+Internal Server Error: /api/register/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\decorators\csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\views\generic\base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\api\views.py", line 71, in post
+    print(JSONParser().parse(request.data))
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\parsers.py", line 65, in parse
+    return json.load(decoded_stream, parse_constant=parse_constant)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\rest_framework\utils\json.py", line 31, in load
+    return json.load(*args, **kwargs)
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\json\__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "c:\users\takud\appdata\local\programs\python\python37\lib\codecs.py", line 496, in read
+    newdata = self.stream.read()
+AttributeError: 'QueryDict' object has no attribute 'read'
+"POST /api/register/ HTTP/1.1" 500 116249

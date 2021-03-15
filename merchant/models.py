@@ -62,6 +62,7 @@ class User(AbstractUser):
     merchant = models.ForeignKey(Merchant, on_delete=models.DO_NOTHING, null=True, blank=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
+    otp = models.CharField(max_length=30)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=20, default='263')
     role = models.CharField(max_length=20, default='',
@@ -97,6 +98,17 @@ class User(AbstractUser):
         else:
             return False
 
+
+class PasswordHistory(models.Model):
+    """
+    Model Class to save the last 4 password of a merchant
+    """
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
+    password_hash_1 = models.TextField(blank=True, null=True)
+    password_hash_2 = models.TextField(blank=True, null=True)
+    password_hash_3 = models.TextField(blank=True, null=True)
+    password_hash_4 = models.TextField(blank=True, null=True)
+    next_cycle = models.IntegerField(default=1)
 
 class IntelliPos(models.Model):
     """
