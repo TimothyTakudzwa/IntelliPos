@@ -132,6 +132,8 @@ class IntelliPos(models.Model):
         user = User.objects.filter(username=username).first()
         if user is None:
             return False, 'Username does not exist'
+        if user.blocked:
+            return False, 'This Account is Blocked'
         pos = cls.objects.filter(pos_id=posId).filter(merchant=user.merchant).first()
         if pos is None:
             return False, 'Invalid POS ID'
@@ -143,6 +145,10 @@ class IntelliPos(models.Model):
             pos.save()
             return True, 'Login Successful'
         else:
+            user.pin_tries = user.pin_tries - 1
+            if user.pin_tries == 0:
+                user.blocked = True
+            user.save()
             return False, 'Wrong username / password'
 
 
