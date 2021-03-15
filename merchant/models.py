@@ -68,8 +68,9 @@ class User(AbstractUser):
     role = models.CharField(max_length=20, default='',
                             choices=(('ADMIN', 'ADMIN'), ('TELLER', 'TELLER')))
     pin_tries = models.IntegerField(default=3)
-    blocked = models.BooleanField(default=False)
+    locked = models.BooleanField(default=False)
     password_change = models.DateField(default=datetime.datetime.now() + datetime.timedelta(3 * 30))
+    unlocks_at = models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(minutes=30))
 
     def __str__(self):
         return self.username
@@ -113,6 +114,7 @@ class PasswordHistory(models.Model):
     password_hash_4 = models.TextField(blank=True, null=True)
     next_cycle = models.IntegerField(default=1)
 
+
 class IntelliPos(models.Model):
     """
     Merchant IntelliPOS Model
@@ -129,14 +131,19 @@ class IntelliPos(models.Model):
 
     @classmethod
     def authenticate(cls, username, password, posId, device):
-
         user = User.objects.filter(username=username).first()
         if user is None:
             return False, 'Username does not exist'
-        if user.blocked:
-            return False, 'This Account is Blocked'
-        print(user.password_change)
-        print(str(datetime.date.today()))
+        if user.locked:
+            time_difference =user.unlocks_at.replace(tzinfo=None) - datetime.datetime.now().replace(tzinfo=None)
+            minutes = time_difference.seconds//60
+            print(minutes)
+            if minutes < 30:
+                return False, 'This Account is Locked'
+            else:
+                user.locked = False
+                user.pin_tries = 3
+                user.save()
         if user.password_change < datetime.date.today():
             return False, 'Password has expired'
         pos = cls.objects.filter(pos_id=posId).filter(merchant=user.merchant).first()
@@ -152,8 +159,10 @@ class IntelliPos(models.Model):
         else:
             user.pin_tries = user.pin_tries - 1
             if user.pin_tries < 1:
+                print('TEST')
                 user.pin_tries = 0
-                user.blocked = True
+                user.locked = True
+                user.unlocks_at = datetime.datetime.now() + datetime.timedelta(minutes=30)
             user.save()
             return False, 'Wrong username / password'
 
