@@ -1919,3 +1919,9 @@ Traceback (most recent call last):
     if bcrypt.checkpw(new_password.encode("utf-8"), user.password.encode("utf-8")):
 AttributeError: 'bytes' object has no attribute 'encode'
 "POST /api/reset-password/ HTTP/1.1" 500 103211
+Internal Server Error: /api/login/
+"POST /api/login/?username=timothy HTTP/1.1" 500 30
+Internal Server Error: /api/login/
+"POST /api/login/?username=timothy HTTP/1.1" 500 30
+Internal Server Error: /api/login/
+"POST /api/login/?username=timothy HTTP/1.1" 500 30

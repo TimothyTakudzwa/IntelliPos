@@ -69,6 +69,7 @@ class User(AbstractUser):
                             choices=(('ADMIN', 'ADMIN'), ('TELLER', 'TELLER')))
     pin_tries = models.IntegerField(default=3)
     blocked = models.BooleanField(default=False)
+    password_change = models.DateField(default=datetime.datetime.now() + datetime.timedelta(3 * 30))
 
     def __str__(self):
         return self.username
@@ -134,6 +135,8 @@ class IntelliPos(models.Model):
             return False, 'Username does not exist'
         if user.blocked:
             return False, 'This Account is Blocked'
+        if user.password_change > datetime.datetime.now():
+            return False, 'Password has expired'
         pos = cls.objects.filter(pos_id=posId).filter(merchant=user.merchant).first()
         if pos is None:
             return False, 'Invalid POS ID'

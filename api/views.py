@@ -1,7 +1,6 @@
 import random
 import uuid
-
-import bcrypt
+import datetime
 
 from django.core.mail import send_mail
 from django.http import Http404
@@ -99,6 +98,7 @@ class ResetPassword(APIView):
             else:
                 if not password_used(user, data.encode('utf8')):
                     user.password = bcrypt.hashpw(data.encode('utf8'), bcrypt.gensalt()).decode()
+                    user.password_change = datetime.datetime.now() + datetime.timedelta(3 * 30)
                     user.save()
                     success = True
                     message = "Password Updated"
