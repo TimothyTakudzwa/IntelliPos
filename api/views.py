@@ -1,4 +1,4 @@
-import os
+import random
 import uuid
 
 import bcrypt
@@ -63,13 +63,14 @@ class DEKViewSet(APIView):
 
 
 class ResetPassword(APIView):
-    def get(self):
-        email = self.request.GET.get('email')
+    def get(self, request):
+        email = self.request.POST.get('email')
+        print(email)
         user = User.objects.filter(email=email).first()
         if user is not None:
-            otp = os.random(6)
-            user.otp = otp
-            message = "A password reset was initiated for your account. Please Enter the OTP " + otp + " on the mobile app to reset"
+            otp = random.randint(0,99999)
+            user.otp = str(otp)
+            message = "A password reset was initiated for your account. Please Enter the OTP " + str(otp) + " on the mobile app to reset"
             user.save()
             send_mail(
                 'IntelliPOS Password Reset',
@@ -82,11 +83,11 @@ class ResetPassword(APIView):
         else:
             return JsonResponse(status=200, data={'success': False, 'message': "Invalid Email"})
 
-    def post(self):
+    def post(self, request):
         data = self.request.POST.get('data')
         email = self.request.POST.get('email')
         action = self.request.POST.get('action')
-        user = User.object.filter(email=email).first()
+        user = User.objects.filter(email=email).first()
         if user is not None:
             if action == 'verify_otp':
                 if data == user.otp:
@@ -96,8 +97,9 @@ class ResetPassword(APIView):
                     success = False
                     message = 'OTP Mismatch'
             else:
-                password = bcrypt.hashpw(data.encode('utf8'), bcrypt.gensalt()).decode()
-                if password_used(user, password):
+                if not password_used(user, data.encode('utf8')):
+                    user.password = bcrypt.hashpw(data.encode('utf8'), bcrypt.gensalt()).decode()
+                    user.save()
                     success = True
                     message = "Password Updated"
                 else:

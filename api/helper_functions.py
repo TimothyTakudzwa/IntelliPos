@@ -1,5 +1,6 @@
 import json
 
+import bcrypt
 import requests
 
 from merchant.models import PasswordHistory
@@ -8,17 +9,21 @@ from .models import JWTToken
 
 def password_used(user, new_password):
     history = PasswordHistory.objects.filter(user=user).first()
+    password = b"super secret password"
+    hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+    if bcrypt.checkpw(new_password, user.password.encode("utf-8")):
+        return True
     if history is None:
-        PasswordHistory(user=user, password_hash_1=user.password_hash).save()
+        PasswordHistory(user=user, password_hash_1=user.password).save()
         return False
     else:
-        if history.password_hash_1 == new_password:
+        if bcrypt.checkpw(new_password, history.password_hash_1.encode("utf-8")):
             return True
-        elif history.password_hash_2 == new_password:
+        elif bcrypt.checkpw(new_password, history.password_hash_2.encode("utf-8")):
             return True
-        elif history.password_hash_3 == new_password:
+        elif bcrypt.checkpw(new_password, history.password_hash_3.encode("utf-8")):
             return True
-        elif history.password_hash_4 == new_password:
+        elif bcrypt.checkpw(new_password, history.password_hash_4.encode("utf-8")):
             return True
         else:
             save_to_history(user, history)
@@ -26,14 +31,18 @@ def password_used(user, new_password):
 
 
 def save_to_history(user, history):
-    if history.next_clycle == 1:
-        history.password_hash_1 = user.password_hash
-    elif history.next_clycle == 1:
-        history.password_hash_2 = user.password_hash
-    elif history.next_clycle == 1:
-        history.password_hash_3 = user.password_hash
-    elif history.next_clycle == 1:
-        history.password_hash_4 = user.password_hash
+    if history.next_cycle == 1:
+        history.password_hash_1 = user.password
+        history.next_cycle = 2
+    elif history.next_cycle == 2:
+        history.password_hash_2 = user.password
+        history.next_cycle = 3
+    elif history.next_cycle == 3:
+        history.password_hash_3 = user.password
+        history.next_cycle = 4
+    elif history.next_cycle == 4:
+        history.password_hash_4 = user.password
+        history.next_cycle = 1
     history.save()
     return True
 
