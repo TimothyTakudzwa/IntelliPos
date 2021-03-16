@@ -134,7 +134,7 @@ class RegisterViewSet(APIView):
         if email_exists:
             return JsonResponse(status=401, data={'detail': 'Email Exists'})
 
-        user = User(username=username, password=password, token=token, email=email, role='TELLER',
+        user = User(username=username, password=password, email=email, role='TELLER',
                     first_name=first_name, last_name=last_name, \
                     merchant=merchant)
         user.save()
