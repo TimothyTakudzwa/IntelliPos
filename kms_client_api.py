@@ -1,7 +1,8 @@
 import requests
+from django.conf import settings 
 
 class KMSCLIENTAPI:
-    KMS_BASE_URL = 'http://45.55.44.41:8003/api/v1'
+    KMS_BASE_URL = settings.KMS_BASE_URL 
 
     def __init__(self, access_token=None, token_refresh=None):
         self.headers = {
@@ -18,6 +19,7 @@ class KMSCLIENTAPI:
             headers=self.headers,
             params = {'key_name':key_name}
         )
+        return r
     
 
     def refresh_token(self):

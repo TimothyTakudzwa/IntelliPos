@@ -3,6 +3,7 @@ import uuid
 import datetime
 
 from django.core.mail import send_mail
+from django.conf import settings
 from django.http import Http404
 from django.http.response import JsonResponse
 from rest_framework import status
@@ -11,11 +12,44 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from merchant.constants import create_account_email_user
-from merchant.models import Transaction
-from merchant.models import User, IntelliPos, Merchant
+from merchant.models import User, IntelliPos, Merchant, Transaction
 from .helper_functions import *
 from .models import JWTToken
 from .serializers import TransactionSerializer
+from django.conf import settings
+
+
+class KMSAPIClient:
+    kms_url = settings.KMS_API_URL
+
+    def __init(self, key_name, token, headers):
+        self.key_name = key_name
+        self.token = token
+        self.headers = {"Authorization": f"Bearer Token {self.token}"}
+
+    def get_dek(self):    
+        r = requests.get(
+            kms_url,
+            headers=self.headers,
+            params={'key_name': self.key_name}
+        )
+        success, message = check_response(r)        
+        return success, message
+        
+    @staticmethod
+    def check_response(r):
+        if r.status_code == 200:
+            data = r.json()
+            if data['success']:
+                dek = data['message']
+                message = f"{dek.encode('ISO-8859-1')}"
+            else:
+                success = data['success']
+                message = data['messages']
+        else:
+            message = 'Failed to get DEK'
+            success = False
+        pass
 
 
 # Create your views here.
@@ -37,27 +71,7 @@ class DEKViewSet(APIView):
 
     def get(self, request):
         key_name = self.request.GET.get('key_name')
-        url = 'http://45.55.44.41:8003/api/v1/keys/dek?key_name=' + key_name
-        token = JWTToken.objects.filter(name='intellipos').first()
-        headers = {"Content-Type": "application/json", "Authorization": f"Bearer {token.access_token}"}
-        r = requests.get(url, headers=headers)
-        if r.status_code == 200:
-            data = r.json()
-            access_token = data['message']
-            message = f"{access_token.encode('ISO-8859-1')}"
-            success = True
-        else:
-            url = 'http://45.55.44.41:8003/api/v1/refresh_token'
-            refresh_token = JWTToken.get_refresh_token('intellipos')
-            headers = {"Content-Type": "application/json", "Authorization": f"Bearer {token.refresh_token}"}
-            r = requests.get(url, headers=headers)
-            data = r.json()
-            if r.status_code == 200:
-                token.access_token = data['access_token']
-                token.save()
-
-            message = 'Failed to get DEK'
-            success = False
+        success, message = get_dek(key_name=key_name)
         return JsonResponse(status=200, data={'success': success, 'message': message})
 
 
@@ -67,9 +81,10 @@ class ResetPassword(APIView):
         print(email)
         user = User.objects.filter(email=email).first()
         if user is not None:
-            otp = random.randint(0,99999)
+            otp = random.randint(0, 99999)
             user.otp = str(otp)
-            message = "A password reset was initiated for your account. Please Enter the OTP " + str(otp) + " on the mobile app to reset"
+            message = "A password reset was initiated for your account. Please Enter the OTP " + str(
+                otp) + " on the mobile app to reset"
             user.save()
             send_mail(
                 'IntelliPOS Password Reset',

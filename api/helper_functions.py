@@ -5,6 +5,7 @@ import requests
 
 from merchant.models import PasswordHistory
 from .models import JWTToken
+from django.conf import settings
 
 
 def password_used(user, new_password):
@@ -62,3 +63,4 @@ def get_access_token(name):
         token = JWTToken(access_token=data['access_token'], refresh_token=data['refresh_token'], name=name)
         token.save()
     return token.access_token
+
