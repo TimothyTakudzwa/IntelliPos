@@ -54,7 +54,7 @@ LOGGING = {
 # Application definition
 
 INSTALLED_APPS = [
-    'api.apps.ApiConfig',
+    'merchant_api.apps.MerchantApiConfig',
     'bank.apps.BankConfig',
     'shop.apps.ShopConfig',
     'customer.apps.CustomerConfig',
@@ -64,8 +64,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    
+    'django.contrib.staticfiles',    
     'rest_framework',
     # 'corsheaders',
 ]

@@ -17,39 +17,7 @@ from .helper_functions import *
 from .models import JWTToken
 from .serializers import TransactionSerializer
 from django.conf import settings
-
-
-class KMSAPIClient:
-    kms_url = settings.KMS_API_URL
-
-    def __init(self, key_name, token, headers):
-        self.key_name = key_name
-        self.token = token
-        self.headers = {"Authorization": f"Bearer Token {self.token}"}
-
-    def get_dek(self):    
-        r = requests.get(
-            kms_url,
-            headers=self.headers,
-            params={'key_name': self.key_name}
-        )
-        success, message = check_response(r)        
-        return success, message
-        
-    @staticmethod
-    def check_response(r):
-        if r.status_code == 200:
-            data = r.json()
-            if data['success']:
-                dek = data['message']
-                message = f"{dek.encode('ISO-8859-1')}"
-            else:
-                success = data['success']
-                message = data['messages']
-        else:
-            message = 'Failed to get DEK'
-            success = False
-        pass
+from kms_client_api import KMSCLIENTAPI
 
 
 # Create your views here.
@@ -68,11 +36,14 @@ class TransactionProcessing(APIView):
 
 
 class DEKViewSet(APIView):
+    """
+    Get DEK Viewset
+    """
 
     def get(self, request):
-        key_name = self.request.GET.get('key_name')
-        success, message = get_dek(key_name=key_name)
-        return JsonResponse(status=200, data={'success': success, 'message': message})
+        key_name = self.request.GET.get('key_name')        
+        message = KMSCLIENTAPI().request_dek(key_name)               
+        return JsonResponse(status=status, data={'message': message})
 
 
 class ResetPassword(APIView):
