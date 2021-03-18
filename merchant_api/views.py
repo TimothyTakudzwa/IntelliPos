@@ -42,8 +42,8 @@ class DEKViewSet(APIView):
 
     def get(self, request):
         key_name = self.request.GET.get('key_name')        
-        message = KMSCLIENTAPI().request_dek(key_name)               
-        return JsonResponse(status=status, data={'message': message})
+        message = KMSCLIENTAPI().request_dek(key_name)                  
+        return JsonResponse(status=200, data={'message': f'{message}'}) 
 
 
 class ResetPassword(APIView):

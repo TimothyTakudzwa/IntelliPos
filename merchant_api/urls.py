@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework_simplejwt import views as jwt_views
 
-from api import views
+from merchant_api import views
 from .views import RegisterViewSet, ResetPassword
 
 router = routers.DefaultRouter()

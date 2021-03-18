@@ -89,7 +89,7 @@ DEFAULT_FROM_EMAIL = 'NFC Accounts <timothytakudzwa@gmail.com>'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-KMS_API_URL = env('KMS_API_URL')
+KMS_BASE_URL =  "http://45.55.44.41:8003/api/v1"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
