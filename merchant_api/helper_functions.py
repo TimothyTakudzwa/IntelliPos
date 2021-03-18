@@ -2,33 +2,40 @@ import json
 
 import bcrypt
 import requests
+from django.conf import settings
+from django.core.cache import cache
 
 from merchant.models import PasswordHistory
 from merchant_api.models import JWTToken
-from django.conf import settings
+
 
 
 def check_cache(f):
     def wrapper(*args, **kwargs):
         # check if cache contains access_token
         # and refresh_token keys
-        if False:
+        
+        if cache.get('ACCESS_TOKEN') is not None:        
             # get key values from cache
-            # return access and refresh_token
-            return 
-        else:
+            # return access and refresh_token            
+            return cache.get('ACCESS_TOKEN'), cache.get('REFRESH_TOKEN') 
+        else:           
             # delegate task to the function
             return f()
+
     return wrapper
 
 
 @check_cache
 def get_jwt_tokens():
     # db queries to get tokens
-    # store tokens in cache as key value pairs 
-    # token = JWTToken.objects.filter(name='intelliPos').first()
-    # return token.access_token, token.refresh_token
-    return '',''
+    # store tokens in cacheas key value pairs     
+    token = JWTToken.objects.filter(name='intelliPos').first()
+    cache.set('ACCESS_TOKEN', token.access_token, settings.CACHE_EXPIRY)
+    cache.set('REFRESH_TOKEN', token.refresh_token, settings.CACHE_EXPIRY)
+    print(cache.get('ACCESS_TOKEN'))
+    return token.access_token, token.refresh_token
+
 
 def password_used(user, new_password):
     history = PasswordHistory.objects.filter(user=user).first()
@@ -85,4 +92,3 @@ def get_access_token(name):
         token = JWTToken(access_token=data['access_token'], refresh_token=data['refresh_token'], name=name)
         token.save()
     return token.access_token
-

@@ -51,13 +51,23 @@ LOGGING = {
 }
 
 
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': 'localhost:6379',
+        'OPTIONS': {
+            'DB': 0,
+        }
+    }
+}
+
+CACHE_EXPIRY = 60 * 15
+
 # Application definition
 
 INSTALLED_APPS = [
     'merchant_api.apps.MerchantApiConfig',
-    'bank.apps.BankConfig',
-    'shop.apps.ShopConfig',
-    'customer.apps.CustomerConfig',
+    
     'merchant.apps.MerchantConfig',
     'django.contrib.admin',
     'django.contrib.auth',

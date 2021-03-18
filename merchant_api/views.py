@@ -118,7 +118,7 @@ class RegisterViewSet(APIView):
         dek = KMSCLIENTAPI().request_dek('token_key')
         print(dek)
         print(password.encode('utf8'))
-        cipher_text = NISTApprovedCryptoAlgo['AES'].value.handle_pt(dek, password.encode('utf8'))
+        cipher_text = NISTApprovedCryptoAlgo['AES'].value.handle_pt(dek, password) 
 
         if username_exists:
             return JsonResponse(status=401, data={'detail': 'Username Exists'})
