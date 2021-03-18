@@ -42,6 +42,7 @@ class KMSCLIENTAPI:
             headers=self.headers,
             params={'key_name': key_name}
         )
+        print(r)
         try:
             data = r.json()
         except JSONDecodeError as e:

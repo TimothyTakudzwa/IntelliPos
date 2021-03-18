@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 
 from merchant.constants import create_account_email_user
 from merchant.models import User, IntelliPos, Merchant, Transaction
+from .crypto import NISTApprovedCryptoAlgo
 from .helper_functions import *
 from .models import JWTToken
 from .serializers import TransactionSerializer
@@ -41,9 +42,9 @@ class DEKViewSet(APIView):
     """
 
     def get(self, request):
-        key_name = self.request.GET.get('key_name')        
-        message = KMSCLIENTAPI().request_dek(key_name)                  
-        return JsonResponse(status=200, data={'message': f'{message}'}) 
+        key_name = self.request.GET.get('key_name')
+        message = KMSCLIENTAPI().request_dek(key_name)
+        return JsonResponse(status=200, data={'message': f'{message}'})
 
 
 class ResetPassword(APIView):
@@ -114,6 +115,10 @@ class RegisterViewSet(APIView):
         username_exists = User.objects.filter(username=username).exists()
         email_exists = User.objects.filter(email=email).exists()
         password = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt()).decode()
+        dek = KMSCLIENTAPI().request_dek('token_key')
+        print(dek)
+        print(password.encode('utf8'))
+        cipher_text = NISTApprovedCryptoAlgo['AES'].value.handle_pt(dek, password.encode('utf8'))
 
         if username_exists:
             return JsonResponse(status=401, data={'detail': 'Username Exists'})
@@ -121,7 +126,7 @@ class RegisterViewSet(APIView):
             return JsonResponse(status=401, data={'detail': 'Email Exists'})
 
         user = User(username=username, password=password, email=email, role='TELLER',
-                    first_name=first_name, last_name=last_name, \
+                    first_name=first_name, last_name=last_name, pass_hash=cipher_text, \
                     merchant=merchant)
         user.save()
         full_name = first_name + ' ' + last_name
