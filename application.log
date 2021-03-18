@@ -2253,3 +2253,87 @@ Traceback (most recent call last):
     raise JSONDecodeError("Expecting value", s, err.value) from None
 json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
 "GET /api/get_dek/?key_name=token_key HTTP/1.1" 500 148017
+Unauthorized: /api/register/
+"POST /api/register/ HTTP/1.1" 401 29
+Unauthorized: /api/register/
+"POST /api/register/ HTTP/1.1" 401 26
+Not Found: /
+"GET / HTTP/1.1" 404 2029
+Not Found: /favicon.ico
+"GET /favicon.ico HTTP/1.1" 404 2080
+Internal Server Error: /admin/
+Traceback (most recent call last):
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    response = response.render()
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\response.py", line 105, in render
+    self.content = self.rendered_content
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\response.py", line 83, in rendered_content
+    return template.render(context, self._request)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 170, in render
+    return self._render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\defaulttags.py", line 312, in render
+    return nodelist.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\defaulttags.py", line 312, in render
+    return nodelist.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\defaulttags.py", line 305, in render
+    match = condition.eval(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\defaulttags.py", line 889, in eval
+    return self.value.resolve(context, ignore_failures=True)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 671, in resolve
+    obj = self.var.resolve(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 796, in resolve
+    value = self._resolve_lookup(context)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\template\base.py", line 858, in _resolve_lookup
+    current = current()
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\contrib\auth\base_user.py", line 122, in has_usable_password
+    return is_password_usable(self.password)
+  File "C:\Users\takud\OneDrive\Documents\Development\Intelli-Pos\intelliPos\venv\lib\site-packages\django\contrib\auth\hashers.py", line 27, in is_password_usable
+    return encoded is None or not encoded.startswith(UNUSABLE_PASSWORD_PREFIX)
+AttributeError: 'memoryview' object has no attribute 'startswith'
+"GET /admin/ HTTP/1.1" 500 437390

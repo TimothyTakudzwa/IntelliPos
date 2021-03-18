@@ -62,6 +62,7 @@ class User(AbstractUser):
     merchant = models.ForeignKey(Merchant, on_delete=models.DO_NOTHING, null=True, blank=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
+    pass_hash = models.BinaryField()
     otp = models.CharField(max_length=30)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=20, default='263')

@@ -26,8 +26,9 @@ def check_cache(f):
 def get_jwt_tokens():
     # db queries to get tokens
     # store tokens in cache as key value pairs 
-    token = JWTToken.objects.filter(name='intelliPos').first()
-    return token.access_token, token.refresh_token
+    # token = JWTToken.objects.filter(name='intelliPos').first()
+    # return token.access_token, token.refresh_token
+    return '',''
 
 def password_used(user, new_password):
     history = PasswordHistory.objects.filter(user=user).first()
