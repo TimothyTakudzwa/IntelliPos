@@ -66,7 +66,6 @@ CACHE_EXPIRY = 60 * 15
 # Application definition
 
 INSTALLED_APPS = [
-    'merchant_api.apps.MerchantApiConfig',
     
     'merchant.apps.MerchantConfig',
     'django.contrib.admin',
@@ -76,7 +75,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',    
     'rest_framework',
-    # 'corsheaders',
+    
 ]
 # 
 

@@ -8,9 +8,6 @@ from django.utils import timezone
 from .constants import BANKS, INDUSTRY_CHOICES, COMPANY_TYPE
 
 
-# Create your models here.
-
-
 class Account(models.Model):
     """ 
     Merchant Account Model 
@@ -179,3 +176,24 @@ class Transaction(models.Model):
     merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE, blank=False, null=False)
     pos = models.ForeignKey(IntelliPos, on_delete=models.PROTECT, related_name='writer_merchant')
     status = models.BooleanField(default=False)
+
+
+class JWTToken(models.Model):
+    """
+    Model Class for KMS Access and Refresh Token
+    """
+    name = models.TextField(max_length=30, blank=True, null=True)
+    access_token = models.TextField(blank=True, null=True)
+    refresh_token = models.TextField(blank=True, null=True)
+
+    @classmethod
+    def get_access_token(cls, name):
+        token = cls.objects.filter(name=name).first()
+        return token.access_token
+
+    @classmethod
+    def get_refresh_token(cls, name):
+        token = cls.objects.filter(name=name).first()
+        return token.refresh_token
+
+# Create your models here.
