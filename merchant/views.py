@@ -15,7 +15,7 @@ from merchant.constants import create_account_email_user
 from merchant.models import User, IntelliPos, Merchant, Transaction
 from .crypto import NISTApprovedCryptoAlgo
 from .helper_functions import *
-from .models import JWTToken
+
 from .serializers import TransactionSerializer
 from django.conf import settings
 from kms_client_api import KMSCLIENTAPI

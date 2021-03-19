@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ribsks@8m3#f(z4d-i0$j0!a)%=$)y8srpy_lp0#*n6kblksmf'
+SECRET_KEY = env('SECRET_KEY', 'ribsks@8m3#f(z4d-i0$j0!a)%=$)y8srpy_lp0#*n6kblksmf')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG', True)
 
 ALLOWED_HOSTS = ['45.55.44.41', '127.0.0.1']
 
@@ -54,14 +54,17 @@ LOGGING = {
 CACHES = {
     'default': {
         'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': 'localhost:6379',
+        'LOCATION': env('REDIS_URL', 'localhost:6379'),
         'OPTIONS': {
             'DB': 0,
         }
     }
 }
 
+# Redis
 CACHE_EXPIRY = 60 * 15
+CACHE_JWT_EXPIRY = env('CACHE_JWT_TOKENS_EXPIRY', 60 * 15) 
+CACHE_DEK_EXPIRY = env('CACHE_DEK_EXPIRY', 60 * 15)
 
 # Application definition
 
@@ -77,16 +80,17 @@ INSTALLED_APPS = [
     'rest_framework',
     
 ]
-# 
 
+# Dango Rest Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
 
+# Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = "Site Support <support@site.com>"
+DEFAULT_FROM_EMAIL = 'NFC Accounts <timothytakudzwa@gmail.com>'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'timothytakudzwa@gmail.com'
 EMAIL_HOST_PASSWORD = 'timmytaku95#'
@@ -94,11 +98,6 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
 
-DEFAULT_FROM_EMAIL = 'NFC Accounts <timothytakudzwa@gmail.com>'
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-KMS_BASE_URL =  "http://45.55.44.41:8003/api/v1"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -110,7 +109,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'intelliPos.urls'
+ROOT_URLCONF = 'intelli-pos.urls'
 
 TEMPLATES = [
     {
@@ -138,11 +137,11 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'nfc',
-        'USER': 'nfc',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': env('DATABASE_NAME', 'nfc'),
+        'USER': env('USER', 'nfc'),
+        'PASSWORD': env('PASSWORD', '12345'),
+        'HOST': env('HOST', 'localhost'),
+        'PORT': env('PORT', '5432'),
     }
 
 }
@@ -191,3 +190,8 @@ MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'merchant.User'
+
+# KMS
+KMS_BASE_URL =  env('KMS_BASE_URL', "http://45.55.44.41:8003/api/v1")
+KMS_USERNAME = env('KMS_USERNAME')
+KMS_PASSWORD = env('KMS_PASSWORD')
