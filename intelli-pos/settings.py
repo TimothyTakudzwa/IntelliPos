@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+
 import environ
 
 env = environ.Env()
@@ -20,7 +21,6 @@ environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = ['45.55.44.41', '127.0.0.1']
 
@@ -51,7 +51,6 @@ LOGGING = {
     },
 }
 
-
 CACHES = {
     'default': {
         'BACKEND': 'redis_cache.RedisCache',
@@ -70,16 +69,16 @@ CACHE_DEK_EXPIRY = env('CACHE_DEK_EXPIRY')
 # Application definition
 
 INSTALLED_APPS = [
-    
+
     'merchant.apps.MerchantConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',    
+    'django.contrib.staticfiles',
     'rest_framework',
-    
+
 ]
 
 # Dango Rest Framework
@@ -98,7 +97,6 @@ EMAIL_HOST_PASSWORD = 'timmytaku95#'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -128,8 +126,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'intelliPos.wsgi.application'
-
+WSGI_APPLICATION = 'intelli-pos.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -146,7 +143,6 @@ DATABASES = {
     }
 
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -166,7 +162,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -180,7 +175,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -193,6 +187,6 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'merchant.User'
 
 # KMS
-KMS_BASE_URL =  env('KMS_BASE_URL')
+KMS_BASE_URL = env('KMS_BASE_URL')
 KMS_USERNAME = env('KMS_USERNAME')
 KMS_PASSWORD = env('KMS_PASSWORD')
