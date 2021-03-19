@@ -14,6 +14,7 @@ from pathlib import Path
 import environ
 
 env = environ.Env()
+
 environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY', 'ribsks@8m3#f(z4d-i0$j0!a)%=$)y8srpy_lp0#*n6kblksmf')
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG', True)
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['45.55.44.41', '127.0.0.1']
 
@@ -54,7 +55,7 @@ LOGGING = {
 CACHES = {
     'default': {
         'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': env('REDIS_URL', 'localhost:6379'),
+        'LOCATION': env('REDIS_URL'),
         'OPTIONS': {
             'DB': 0,
         }
@@ -63,8 +64,8 @@ CACHES = {
 
 # Redis
 CACHE_EXPIRY = 60 * 15
-CACHE_JWT_EXPIRY = env('CACHE_JWT_TOKENS_EXPIRY', 60 * 15) 
-CACHE_DEK_EXPIRY = env('CACHE_DEK_EXPIRY', 60 * 15)
+CACHE_JWT_EXPIRY = env('CACHE_JWT_TOKENS_EXPIRY')
+CACHE_DEK_EXPIRY = env('CACHE_DEK_EXPIRY')
 
 # Application definition
 
@@ -137,11 +138,11 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DATABASE_NAME', 'nfc'),
-        'USER': env('USER', 'nfc'),
-        'PASSWORD': env('PASSWORD', '12345'),
-        'HOST': env('HOST', 'localhost'),
-        'PORT': env('PORT', '5432'),
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('USER'),
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('HOST'),
+        'PORT': env('PORT'),
     }
 
 }
@@ -192,6 +193,6 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'merchant.User'
 
 # KMS
-KMS_BASE_URL =  env('KMS_BASE_URL', "http://45.55.44.41:8003/api/v1")
+KMS_BASE_URL =  env('KMS_BASE_URL')
 KMS_USERNAME = env('KMS_USERNAME')
 KMS_PASSWORD = env('KMS_PASSWORD')

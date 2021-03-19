@@ -1,22 +1,22 @@
-import json
-
 import bcrypt
-import requests
 from django.conf import settings
 from django.core.cache import cache
 
-from merchant.models import PasswordHistory
+from .models import PasswordHistory
+
 
 def check_dek_cache(f):
     """
     Decorator function for checking if cache contains the requested DEK
     """
+
     def wrapper(*args):
-        _ , key_name = args
+        _, key_name = args
         if cache.has_key(key_name):
             return cache.get(key_name)
         else:
             return f(*args)
+
     return wrapper
 
 
@@ -24,10 +24,10 @@ def get_jwt_tokens():
     """
     Gets JWT tokens from cache or KMS server
     """
-    if cache.has_key('access_token') and cache.has_key('refresh_token'):   
-        tokens = cache.get_many(['access_token', 'refresh_token'])           
+    if cache.has_key('access_token') and cache.has_key('refresh_token'):
+        tokens = cache.get_many(['access_token', 'refresh_token'])
         return tokens['access_token'], tokens['refresh_token']
-    else:           
+    else:
         # Login
         access_token, refresh_token = KMSCLIENTAPI.login(
             settings.KMS_USERNAME,
@@ -37,9 +37,6 @@ def get_jwt_tokens():
         cache.set('access_token', access_token, settings.TOKEN_CACHE_EXPIRY)
         cache.set('refresh_token', access_token, settings.TOKEN_CACHE_EXPIRY)
         return access_token, refresh_token
-
-
-
 
 
 def password_used(user, new_password):
@@ -80,4 +77,3 @@ def save_to_history(user, history):
         history.next_cycle = 1
     history.save()
     return True
-

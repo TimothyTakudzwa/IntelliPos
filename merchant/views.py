@@ -6,6 +6,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.http import Http404
 from django.http.response import JsonResponse
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -18,7 +20,7 @@ from .helper_functions import *
 
 from .serializers import TransactionSerializer
 from django.conf import settings
-from kms_client_api import KMSCLIENTAPI
+from .kms_client_api import  KMSCLIENTAPI
 
 
 # Create your views here.
@@ -54,15 +56,16 @@ class ResetPassword(APIView):
         user = User.objects.filter(email=email).first()
         if user is not None:
             otp = random.randint(0, 99999)
-            user.otp = str(otp)
-            message = "A password reset was initiated for your account. Please Enter the OTP " + str(
-                otp) + " on the mobile app to reset"
+            user.otp = str(otp)            
             user.save()
+            html_message = render_to_string('merchant/password_reset.html', {'otp': otp})
+            plain_message = strip_tags(html_message)            
             send_mail(
                 'IntelliPOS Password Reset',
-                message,
+                plain_message,
                 'timothytakudzwa@gmail.com',
                 [email],
+                html_message=html_message,
                 fail_silently=False,
             )
             return JsonResponse(status=200, data={'success': True, 'message': "OTP Sent"})

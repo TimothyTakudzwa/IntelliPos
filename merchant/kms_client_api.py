@@ -1,7 +1,7 @@
 import requests
 from django.conf import settings
 from django.core.cache import cache
-from helper_functions import check_dek_cache, get_jwt_tokens
+from .helper_functions import check_dek_cache, get_jwt_tokens
 
 class KMSCLIENTAPI:
     KMS_BASE_URL = settings.KMS_BASE_URL
