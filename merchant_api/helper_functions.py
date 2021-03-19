@@ -6,35 +6,40 @@ from django.conf import settings
 from django.core.cache import cache
 
 from merchant.models import PasswordHistory
-from merchant_api.models import JWTToken
 
-
-
-def check_cache(f):
-    def wrapper(*args, **kwargs):
-        # check if cache contains access_token
-        # and refresh_token keys
-        
-        if cache.get('ACCESS_TOKEN') is not None:        
-            # get key values from cache
-            # return access and refresh_token            
-            return cache.get('ACCESS_TOKEN'), cache.get('REFRESH_TOKEN') 
-        else:           
-            # delegate task to the function
-            return f()
-
+def check_dek_cache(f):
+    """
+    Decorator function for checking if cache contains the requested DEK
+    """
+    def wrapper(*args):
+        _ , key_name = args
+        if cache.has_key(key_name):
+            return cache.get(key_name)
+        else:
+            return f(*args)
     return wrapper
 
 
-@check_cache
 def get_jwt_tokens():
-    # db queries to get tokens
-    # store tokens in cacheas key value pairs     
-    token = JWTToken.objects.filter(name='intelliPos').first()
-    cache.set('ACCESS_TOKEN', token.access_token, settings.CACHE_EXPIRY)
-    cache.set('REFRESH_TOKEN', token.refresh_token, settings.CACHE_EXPIRY)
-    print(cache.get('ACCESS_TOKEN'))
-    return token.access_token, token.refresh_token
+    """
+    Gets JWT tokens from cache or KMS server
+    """
+    if cache.has_key('access_token') and cache.has_key('refresh_token'):   
+        tokens = cache.get_many(['access_token', 'refresh_token'])           
+        return tokens['access_token'], tokens['refresh_token']
+    else:           
+        # Login
+        access_token, refresh_token = KMSCLIENTAPI.login(
+            settings.KMS_USERNAME,
+            settings.KMS_PASSWORD
+        )
+        # Save tokens in cache
+        cache.set('access_token', access_token, settings.TOKEN_CACHE_EXPIRY)
+        cache.set('refresh_token', access_token, settings.TOKEN_CACHE_EXPIRY)
+        return access_token, refresh_token
+
+
+
 
 
 def password_used(user, new_password):
@@ -76,19 +81,3 @@ def save_to_history(user, history):
     history.save()
     return True
 
-
-def get_access_token(name):
-    token = JWTToken.objects.filter(name=name).first()
-    if token is None:
-        url = 'http://45.55.44.41:8003/api/v1/register'
-        data = {'username': 'takudzwatimothy', 'password': '12345'}
-        headers = {'Content-Type': 'application/json'}
-        r = requests.post(url, data=json.dumps(data), headers=headers)
-        print('-------------------------------------')
-        print(r.json())
-        print('-------------------------------------')
-
-        data = r.json()
-        token = JWTToken(access_token=data['access_token'], refresh_token=data['refresh_token'], name=name)
-        token.save()
-    return token.access_token
