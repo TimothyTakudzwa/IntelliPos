@@ -63,14 +63,13 @@ CACHES = {
 
 # Redis
 CACHE_EXPIRY = 60 * 15
-CACHE_JWT_TOKENS_EXPIRY = env('CACHE_JWT_TOKENS_EXPIRY', 60 * 15) 
+CACHE_JWT_EXPIRY = env('CACHE_JWT_TOKENS_EXPIRY', 60 * 15) 
 CACHE_DEK_EXPIRY = env('CACHE_DEK_EXPIRY', 60 * 15)
 
 # Application definition
 
 INSTALLED_APPS = [
     'merchant_api.apps.MerchantApiConfig',
-    
     'merchant.apps.MerchantConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -89,9 +88,9 @@ REST_FRAMEWORK = {
     ],
 }
 
-
+# Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = "Site Support <support@site.com>"
+DEFAULT_FROM_EMAIL = 'NFC Accounts <timothytakudzwa@gmail.com>'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'timothytakudzwa@gmail.com'
 EMAIL_HOST_PASSWORD = 'timmytaku95#'
@@ -99,14 +98,6 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
 
-DEFAULT_FROM_EMAIL = 'NFC Accounts <timothytakudzwa@gmail.com>'
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-# KMS
-KMS_BASE_URL =  env('KMS_BASE_URL', "http://45.55.44.41:8003/api/v1")
-KMS_USERNAME = env('KMS_USERNAME')
-KMS_PASSWORD = env('KMS_PASSWORD')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -199,3 +190,8 @@ MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'merchant.User'
+
+# KMS
+KMS_BASE_URL =  env('KMS_BASE_URL', "http://45.55.44.41:8003/api/v1")
+KMS_USERNAME = env('KMS_USERNAME')
+KMS_PASSWORD = env('KMS_PASSWORD')
