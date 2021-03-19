@@ -1,7 +1,6 @@
 import requests
 from django.conf import settings
 from django.core.cache import cache
-from merchant_api.models import JWTToken
 from helper_functions import check_dek_cache, get_jwt_tokens
 
 class KMSCLIENTAPI:
@@ -31,7 +30,7 @@ class KMSCLIENTAPI:
         if r.status_code == 200:                                        # Base behaviour
             data = r.json()
             dek = data['dek'].encode('ISO-8859-1') 
-            cache.set(key_name, dek, settings.CACHE_DEK_EXPIRY)         # store dek in cache    
+            cache.set(key_name, dek, settings.CACHE_DEK_EXPIRY)        
             return dek
         else:                                                           # recursive behaviour      
             KMSCLIENTAPI.ACCESS_TOKEN = self._refresh_token()
