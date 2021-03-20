@@ -35,6 +35,7 @@ def check_dek_cache(f):
         if cache.has_key(key_name):
             return cache.get(key_name)
         else:
+            
             return f(*args)
 
     return wrapper
@@ -62,6 +63,7 @@ def get_jwt_tokens():
 class KMSCLIENTAPI:    
     KMS_BASE_URL = settings.KMS_BASE_URL
     ACCESS_TOKEN, REFRESH_TOKEN = get_jwt_tokens()
+    print(get_jwt_tokens())
 
     def __init__(self):
         self._headers = None
