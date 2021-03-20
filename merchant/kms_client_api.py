@@ -91,6 +91,8 @@ class KMSCLIENTAPI:
             cache.set(key_name, dek, settings.CACHE_DEK_EXPIRY)
             return dek
         else:  # recursive behaviour
+            print("Request DEK",r.status_code)
+            print("Request DEK",r.json())
             KMSCLIENTAPI.ACCESS_TOKEN = self._refresh_token()
             dek = self.request_dek(key_name)
             return dek
@@ -102,6 +104,8 @@ class KMSCLIENTAPI:
             f'{KMSCLIENTAPI.KMS_BASE_URL}/token_refresh',
             headers=self.headers
         )
+        print("Refresh DEK",r.status_code)
+        print("Refresh DEK",r.json())
         # TODO: Use tests to handle behaviour when status code is not 200
         data = r.json()
         cache.set(
