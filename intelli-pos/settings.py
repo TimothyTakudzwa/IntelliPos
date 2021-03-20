@@ -36,23 +36,19 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-            'logstash': {
-                'level': 'ERROR',
-                'class': 'logstash.TCPLogstashHandler',
-                'host': 'localhost',
-                'port': 5959,
-                'message_type': 'django',
-                'fqdn': False, 
-                'tags': ['django.request'], 
-            },
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': 'application.log',
+        },
     },
-     'loggers': {
-        'django.server': {
-            'handlers': ['logstash'],
-            'level': 'ERROR',
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'WARNING',
             'propagate': True,
         },
-  },
+    },
 }
 
 CACHES = {

@@ -3,7 +3,8 @@ import requests
 from django.conf import settings
 from django.core.cache import cache
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('gunicorn.error')
+print(f'-------------- {logger} ----------------')
 
 
 
