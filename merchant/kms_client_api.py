@@ -46,8 +46,9 @@ def get_jwt_tokens():
     Gets JWT tokens from cache or KMS server
     """
     if cache.has_key('access_token') and cache.has_key('refresh_token'):
-        tokens = cache.get_many(['access_token', 'refresh_token'])
-        return tokens['access_token'], tokens['refresh_token']
+        # tokens = cache.get_many(['access_token', 'refresh_token'])
+        # return tokens['access_token'], tokens['refresh_token']
+        return False
     else:
         # Login
         access_token, refresh_token = login(
