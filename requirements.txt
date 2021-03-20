@@ -24,3 +24,5 @@ sqlparse==0.4.1
 typing-extensions==3.7.4.3
 urllib3==1.26.3
 zipp==3.4.1
+python-json-logger==2.0.1
+python3-logstash==0.4.80
