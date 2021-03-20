@@ -63,7 +63,8 @@ def get_jwt_tokens():
 class KMSCLIENTAPI:    
     KMS_BASE_URL = settings.KMS_BASE_URL
     ACCESS_TOKEN, REFRESH_TOKEN = get_jwt_tokens()
-    
+    print(ACCESS_TOKEN)
+    print(REFRESH_TOKEN)
 
     def __init__(self):
         self._headers = None
