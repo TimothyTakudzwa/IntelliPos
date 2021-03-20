@@ -1,6 +1,9 @@
+import logging
 import requests
 from django.conf import settings
 from django.core.cache import cache
+
+logger = logging.getLogger(__name__)
 
 
 def login(username, password):
@@ -87,6 +90,7 @@ class KMSCLIENTAPI:
             data = r.json()
             dek = data['dek'].encode('ISO-8859-1')
             cache.set(key_name, dek, settings.CACHE_DEK_EXPIRY)
+            logger.info('Sent Successful DEK Request to KMS')
             return dek
         else:  # recursive behaviour
             KMSCLIENTAPI.ACCESS_TOKEN = self._refresh_token()
