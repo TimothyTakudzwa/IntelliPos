@@ -45,20 +45,19 @@ def get_jwt_tokens():
     """
     Gets JWT tokens from cache or KMS server
     """
-    if cache.has_key('access_token') and cache.has_key('refresh_token'):
-        # tokens = cache.get_many(['access_token', 'refresh_token'])
-        # return tokens['access_token'], tokens['refresh_token']
-        return False
-    else:
+    # if cache.has_key('access_token') and cache.has_key('refresh_token'):
+    #     tokens = cache.get_many(['access_token', 'refresh_token'])
+    #     return tokens['access_token'], tokens['refresh_token']
+    # else:
         # Login
-        access_token, refresh_token = login(
-            settings.KMS_USERNAME,
-            settings.KMS_PASSWORD
-        )
-        # Save tokens in cache
-        cache.set('access_token', access_token, settings.CACHE_JWT_EXPIRY)
-        cache.set('refresh_token', access_token, settings.CACHE_JWT_EXPIRY)
-        return access_token, refresh_token
+    access_token, refresh_token = login(
+        settings.KMS_USERNAME,
+        settings.KMS_PASSWORD
+    )
+    # Save tokens in cache
+    cache.set('access_token', access_token, settings.CACHE_JWT_EXPIRY)
+    cache.set('refresh_token', access_token, settings.CACHE_JWT_EXPIRY)
+    return access_token, refresh_token
 
 
 class KMSCLIENTAPI:    
