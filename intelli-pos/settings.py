@@ -51,6 +51,7 @@ LOGGING = {
             'handlers': ['logstash'],
             'level': 'ERROR',
             'propagate': True,
+        },
   },
 }
 
