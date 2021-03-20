@@ -47,7 +47,7 @@ LOGGING = {
             },
     },
      'loggers': {
-        'django.request': {
+        'django.server': {
             'handlers': ['logstash'],
             'level': 'ERROR',
             'propagate': True,

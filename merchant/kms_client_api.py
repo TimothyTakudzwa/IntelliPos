@@ -4,7 +4,8 @@ from django.conf import settings
 from django.core.cache import cache
 
 logger = logging.getLogger(__name__)
-print(f'---------------- {logger} -------------')
+
+
 
 
 def login(username, password):
@@ -37,6 +38,7 @@ def check_dek_cache(f):
     def wrapper(*args):
         _, key_name = args
         if cache.has_key(key_name):
+            logger.info('Retrieved DEK from Cache')
             return cache.get(key_name)
         else:
             
@@ -51,7 +53,6 @@ def get_jwt_tokens():
     """
     if cache.has_key('access_token') and cache.has_key('refresh_token'):
         tokens = cache.get_many(['access_token', 'refresh_token'])
-        logger.info('Successful DEK Retrieval from Cache')
         return tokens['access_token'], tokens['refresh_token']
     else:
         # Login
