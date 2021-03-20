@@ -51,6 +51,7 @@ def get_jwt_tokens():
     """
     if cache.has_key('access_token') and cache.has_key('refresh_token'):
         tokens = cache.get_many(['access_token', 'refresh_token'])
+        logger.info('Successful DEK Retrieval from Cache')
         return tokens['access_token'], tokens['refresh_token']
     else:
         # Login
