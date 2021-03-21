@@ -10,6 +10,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from .constants import BANKS
 from .crypto import NISTApprovedCryptoAlgo
 from .kms_client_api import KMSCLIENTAPI
+from user_auth.models import User
 
 
 
