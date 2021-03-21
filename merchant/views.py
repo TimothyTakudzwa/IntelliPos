@@ -9,7 +9,7 @@ from django.http import Http404
 from django.http.response import JsonResponse
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from rest_framework import sviewsets, status
+from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -29,7 +29,7 @@ from .crypto import NISTApprovedCryptoAlgo
 from .helper_functions import *
 from .models import *
 from .serializers import *
-from .kms_client_api import  KMSCLIENTAPI
+from .kms_client_api import KMSCLIENTAPI
 
 logger = logging.getLogger('gunicorn.error')
 
@@ -52,7 +52,7 @@ class MerchantProfileViewSet(viewsets.ModelViewSet):
             'message': 'Profile successfully created',
         }
         logger.info(f'Created Merchant Profile')
-        return Response(data, status=status.HTTP_201_CREATED,  headers=headers)
+        return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, *args, **kwargs):
         pass
@@ -76,7 +76,7 @@ class RegisterView(RegisterView):
     def get_response_data(self, user):
         if allauth_settings.EMAIL_VERIFICATION == \
                 allauth_settings.EmailVerificationMethod.MANDATORY:
-            return {"detail": _("Verification e-mail sent."), "token":self.token}
+            return {"detail": _("Verification e-mail sent."), "token": self.token}
 
         if getattr(settings, 'REST_USE_JWT', False):
             data = {
@@ -121,10 +121,10 @@ class ResetPassword(APIView):
         user = User.objects.filter(email=email).first()
         if user is not None:
             otp = random.randint(0, 99999)
-            user.otp = str(otp)            
+            user.otp = str(otp)
             user.save()
             html_message = render_to_string('merchant/password_reset.html', {'otp': otp})
-            plain_message = strip_tags(html_message)            
+            plain_message = strip_tags(html_message)
             send_mail(
                 'IntelliPOS Password Reset',
                 plain_message,
@@ -186,7 +186,7 @@ class RegisterViewSet(APIView):
         dek = KMSCLIENTAPI().request_dek('token_key')
         print(dek)
         print(password.encode('utf8'))
-        cipher_text = NISTApprovedCryptoAlgo['AES'].value.handle_pt(dek, password) 
+        cipher_text = NISTApprovedCryptoAlgo['AES'].value.handle_pt(dek, password)
 
         if username_exists:
             return JsonResponse(status=401, data={'detail': 'Username Exists'})
