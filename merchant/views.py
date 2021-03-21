@@ -54,6 +54,12 @@ class MerchantProfileViewSet(viewsets.ModelViewSet):
         logger.info(f'Created Merchant Profile')
         return Response(data, status=status.HTTP_201_CREATED,  headers=headers)
 
+    def update(self, *args, **kwargs):
+        pass
+
+    def partial_update(self, *args, **kwargs):
+        pass
+
     def get_permissions(self):
         """
         Set custom permissions for each action.
