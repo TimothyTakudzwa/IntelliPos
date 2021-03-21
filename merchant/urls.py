@@ -17,7 +17,7 @@ urlpatterns = [
     path('register/', views.RegisterViewSet.as_view()),
     path('reset-password/', views.ResetPassword.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('get_token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
