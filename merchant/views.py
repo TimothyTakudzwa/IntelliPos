@@ -83,8 +83,10 @@ class RegisterView(RegisterView):
                 'user': user,
                 'token': self.token
             }
+            logger.info('Successfully Registered User')
             return JWTSerializer(data).data
         else:
+            logger.info('Successfully Registered User')
             return TokenSerializer(user.auth_token).data
 
 
