@@ -71,13 +71,13 @@ CACHE_DEK_EXPIRY = env('CACHE_DEK_EXPIRY')
 INSTALLED_APPS = [
 
     'merchant.apps.MerchantConfig',
+    'user-auth.apps.UserAuthConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'auth',
+    'django.contrib.staticfiles',    
     'rest_framework',
     'allauth',
     'allauth.account',

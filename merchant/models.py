@@ -1,36 +1,16 @@
 import datetime
 
 import bcrypt
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
+from django_countries.fields import CountryField
+from phonenumber_field.modelfields import PhoneNumberField
 
-from .constants import BANKS, INDUSTRY_CHOICES, COMPANY_TYPE
+from .constants import BANKS
 from .crypto import NISTApprovedCryptoAlgo
 from .kms_client_api import KMSCLIENTAPI
-
-
-class BankAccount(models.Model):
-    """ 
-    Merchant Bank Account Details 
-    """
-    account_number = models.CharField(max_length=30)
-    destination_bank = models.CharField(max_length=100, default='', choices=BANKS)
-    merchant = models.ForeignKey(
-        MerchantProfile, 
-        on_delete=models.CASCADE,
-        related_name='bank_accounts'
-    )
-
-    @property
-    def masked_account_number(self):
-        """
-        Masks account number to only show the last N digits
-        """
-        pass
-
-    def __str__(self):
-        return f'{self.account_number}'
 
 
 class MerchantProfile(models.Model):
@@ -46,7 +26,7 @@ class MerchantProfile(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
- 
+
     def __str__(self):
         return f'{self.name}'
 
@@ -67,56 +47,30 @@ class MerchantProfile(models.Model):
         merchant.save()
 
 
-class User(AbstractUser):
+class BankAccount(models.Model):
+    """ 
+    Merchant Bank Account Details 
     """
-    IntelliPOS Merchant User Model
-    """
-    merchant = models.ForeignKey(Merchant, on_delete=models.DO_NOTHING, null=True, blank=True)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    pass_hash = models.BinaryField()
-    otp = models.CharField(max_length=30)
-    email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=20, default='263')
-    role = models.CharField(max_length=20, default='',
-                            choices=(('ADMIN', 'ADMIN'), ('TELLER', 'TELLER')))
-    pin_tries = models.IntegerField(default=3)
-    locked = models.BooleanField(default=False)
-    password_change = models.DateField(default=datetime.datetime.now() + datetime.timedelta(3 * 30))
-    unlocks_at = models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(minutes=30))
+    account_number = models.CharField(max_length=30)
+    destination_bank = models.CharField(max_length=100, default='', choices=BANKS)
+    merchant = models.ForeignKey(
+        MerchantProfile,
+        on_delete=models.CASCADE,
+        related_name='bank_accounts'
+    )
+
+    @property
+    def masked_account_number(self):
+        """
+        Masks account number to only show the last N digits
+        """
+        pass
 
     def __str__(self):
-        return self.username
-
-    @classmethod
-    def get_user_by_username(cls, username):
-        return cls.objects.filter(username=username).first()
-
-    @classmethod
-    def email_availability(cls, email):
-        return cls.objects.filter(email=email).exists()
-
-    @classmethod
-    def generate_username(cls, first_name, last_name):
-        i = 0
-        username = first_name[0] + last_name
-        while cls.get_user_by_username(username=username):
-            username = first_name[0] + last_name + str(i)
-            i += 1
-        return username
-
-    @classmethod
-    def authenticate(cls, username, password):
-        user = User.objects.filter(username=username).first()
-        if user is None:
-            return False
-        if bcrypt.checkpw(password, user.password.encode("utf-8")):
-            return True
-        else:
-            return False
+        return f'{self.account_number}'
 
 
-class PasswordHistory(models.Model):
+# class PasswordHistory(models.Model):
     """
     Model Class to save the last 4 password of a merchant
     """
@@ -188,7 +142,7 @@ class IntelliPos(models.Model):
             return True, 'Login Successful'
         else:
             user.pin_tries = user.pin_tries - 1
-            if user.pin_tries < 1:                
+            if user.pin_tries < 1:
                 user.pin_tries = 0
                 user.locked = True
                 user.unlocks_at = datetime.datetime.now() + datetime.timedelta(minutes=30)
@@ -204,6 +158,6 @@ class Transaction(models.Model):
     amount = models.FloatField(default=0.00, blank=True)
     currency = models.CharField(max_length=255, default='USD', blank=True)
     reference = models.CharField(max_length=255, default='', blank=True)
-    merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE, blank=False, null=False)
+    merchant = models.ForeignKey(MerchantProfile, on_delete=models.CASCADE, blank=False, null=False)
     pos = models.ForeignKey(IntelliPos, on_delete=models.PROTECT, related_name='writer_merchant')
     status = models.BooleanField(default=False)
