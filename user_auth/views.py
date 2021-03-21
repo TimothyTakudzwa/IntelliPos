@@ -10,6 +10,7 @@ from rest_auth.app_settings import (
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
+logger = logging.getLogger('gunicorn.error')
 class RegisterView(RegisterView):
     def get_response_data(self, user):
         if allauth_settings.EMAIL_VERIFICATION == \
@@ -21,6 +22,8 @@ class RegisterView(RegisterView):
                 'user': user,
                 'token': self.token
             }
+            logger.info('Successfully Registered User')
             return JWTSerializer(data).data
         else:
+            logger.info('Successfully Registered User')
             return TokenSerializer(user.auth_token).data
