@@ -2,7 +2,6 @@ import datetime
 
 import bcrypt
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 from django_countries.fields import CountryField
@@ -11,6 +10,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from .constants import BANKS
 from .crypto import NISTApprovedCryptoAlgo
 from .kms_client_api import KMSCLIENTAPI
+
 
 
 class MerchantProfile(models.Model):
@@ -69,8 +69,7 @@ class BankAccount(models.Model):
     def __str__(self):
         return f'{self.account_number}'
 
-
-# class PasswordHistory(models.Model):
+class PasswordHistory(models.Model):
     """
     Model Class to save the last 4 password of a merchant
     """
