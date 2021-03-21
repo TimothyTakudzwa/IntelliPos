@@ -1,3 +1,4 @@
+import logging
 import random
 import uuid
 import datetime
@@ -8,19 +9,61 @@ from django.http import Http404
 from django.http.response import JsonResponse
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from rest_framework import status
+from rest_framework import sviewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from allauth.account import app_settings as allauth_settings
+from rest_auth.registration.views import RegisterView
+from rest_auth.app_settings import (
+    TokenSerializer,
+    JWTSerializer,
+    create_token
+)
+from rest_framework import status, viewsets
+from rest_framework.response import Response
+
 from merchant.constants import create_account_email_user
-from merchant.models import User, IntelliPos, Merchant, Transaction
 from .crypto import NISTApprovedCryptoAlgo
 from .helper_functions import *
-
-from .serializers import TransactionSerializer
-from django.conf import settings
+from .models import *
+from .serializers import *
 from .kms_client_api import  KMSCLIENTAPI
+
+logger = logging.getLogger('gunicorn.error')
+
+
+class MerchantProfileViewSet(viewsets.ModelViewSet):
+    """
+    Merchant Profile ViewSet
+    """
+    serializer_class = MerchantProfileSerializer
+    queryset = MerchantProfile.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        """Create Merchant profile"""
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        data = {
+            'message': 'Profile successfully created',
+        }
+        logger.info(f'Created Merchant Profile')
+        return Response(data, status=status.HTTP_201_CREATED,  headers=headers)
+
+    def get_permissions(self):
+        """
+        Set custom permissions for each action.
+        Create, retrieve', 'update', 'partial_update',
+        leverage DEFAULT_PERMISSION_CLASSES
+        """
+        permission_classes = list()
+        if self.action == 'list':
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
 
 
 # Create your views here.

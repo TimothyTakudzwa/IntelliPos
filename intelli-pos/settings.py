@@ -77,16 +77,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'auth',
     'rest_framework',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
 ]
 
-# Dango Rest Framework
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
-}
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -184,7 +183,57 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-AUTH_USER_MODEL = 'merchant.User'
+
+
+AUTH_USER_MODEL = 'auth.User'
+
+# Django Rest Auth
+REST_USE_JWT = True
+
+# Override defualt REST Auth Login
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'user_profile.serializers.UserDetailsSerializer',
+}
+
+# JWT 
+JWT_AUTH = {
+    # TODO Use this for now,
+    # a more secure approach is to use
+    # the concept of token refreshing
+    'JWT_VERIFY_EXPIRATION': False
+}
+
+# Django Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+}
+
+
+# Django Allauth
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+     'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
 
 # KMS
 KMS_BASE_URL = env('KMS_BASE_URL')

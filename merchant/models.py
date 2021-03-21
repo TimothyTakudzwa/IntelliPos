@@ -10,38 +10,52 @@ from .crypto import NISTApprovedCryptoAlgo
 from .kms_client_api import KMSCLIENTAPI
 
 
-class Account(models.Model):
+class BankAccount(models.Model):
     """ 
-    Merchant Account Model 
+    Merchant Bank Account Details 
     """
-    bank_account_number = models.CharField(max_length=30)
+    account_number = models.CharField(max_length=30)
     destination_bank = models.CharField(max_length=100, default='', choices=BANKS)
+    merchant = models.ForeignKey(
+        MerchantProfile, 
+        on_delete=models.CASCADE,
+        related_name='bank_accounts'
+    )
+
+    @property
+    def masked_account_number(self):
+        """
+        Masks account number to only show the last N digits
+        """
+        pass
 
     def __str__(self):
         return f'{self.account_number}'
 
 
-class Merchant(models.Model):
+class MerchantProfile(models.Model):
     """
-    IntelliPOS Merchant Model
+    Merchant Business Profile
     """
-    name = models.CharField(max_length=100, default='', unique=True)
-    address = models.CharField(max_length=255, default='')
-    email = models.CharField(max_length=50, default='')
-    phone_number = models.CharField(max_length=30, default='')
-    industry = models.CharField(max_length=100, default='', choices=INDUSTRY_CHOICES)
-    company_type = models.CharField(max_length=30, default='', choices=COMPANY_TYPE)
-    account = models.ForeignKey(Account, on_delete=models.PROTECT, related_name='merchant_account', blank=True)
 
+    name = models.CharField(max_length=100, unique=True)
+    country = CountryField()
+    phone_number = PhoneNumberField()
+    address = models.CharField(max_length=255)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+ 
     def __str__(self):
-        return f'{str(self.id)} - {str(self.name)} {str(self.address)}'
+        return f'{self.name}'
 
     @classmethod
     def get_model_by_id(cls, id):
         return cls.objects.filter(id=id).first()
 
     @classmethod
-    def get_merchant_by_name(cls, name):
+    def get_by_name(cls, name):
         return cls.objects.filter(name=name).first()
 
     @classmethod

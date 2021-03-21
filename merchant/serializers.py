@@ -1,9 +1,23 @@
 from rest_framework import serializers
+from django_countries.serializer_fields import CountryField
+from phonenumber_field.serializerfields import PhoneNumberField
 
 from merchant.models import User, Transaction
 
 
-# Serializers define the API representation.
+class MerchantProfileSerializer(serializers.ModelSerializer):
+    country = CountryField()
+    phone_number = PhoneNumberField()
+    class Meta:
+        model = MerchantProfile
+        fields = ('name', 'country', 'phone_number','address'),
+
+    def create(self, validated_data):
+        user = self.context.get("request").user
+        return MerchantProfile.objects.create(user=user, **validated_data)
+
+
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
