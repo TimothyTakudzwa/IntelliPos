@@ -1,3 +1,4 @@
+import logging
 
 from django.conf import settings
 from allauth.account import app_settings as allauth_settings
