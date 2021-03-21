@@ -107,7 +107,7 @@ class IntelliPos(models.Model):
     last_logged_device = models.CharField(max_length=255)
     last_active_time = models.CharField(max_length=255)
     active_user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE, blank=False, null=False)
+    merchant = models.ForeignKey(MerchantProfile, on_delete=models.CASCADE, blank=False, null=False)
     is_logged_in = models.BooleanField(default=False)
 
     def __str__(self):

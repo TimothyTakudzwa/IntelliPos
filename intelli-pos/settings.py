@@ -71,13 +71,14 @@ CACHE_DEK_EXPIRY = env('CACHE_DEK_EXPIRY')
 INSTALLED_APPS = [
 
     'merchant.apps.MerchantConfig',
-    'user-auth.apps.UserAuthConfig',
+    'user_auth.apps.UserAuthConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',    
+    'django.contrib.staticfiles', 
+    'django.contrib.sites',   
     'rest_framework',
     'allauth',
     'allauth.account',
@@ -185,14 +186,14 @@ MEDIA_URL = '/media/'
 
 
 
-AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'user_auth.User'
 
 # Django Rest Auth
 REST_USE_JWT = True
 
 # Override defualt REST Auth Login
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'user_profile.serializers.UserDetailsSerializer',
+    'USER_DETAILS_SERIALIZER': 'user_auth.serializers.UserDetailsSerializer',
 }
 
 # JWT 

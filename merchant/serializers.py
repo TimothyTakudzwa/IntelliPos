@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django_countries.serializer_fields import CountryField
 from phonenumber_field.serializerfields import PhoneNumberField
 
-from merchant.models import User, Transaction
+from merchant.models import User, Transaction, MerchantProfile
 
 
 class MerchantProfileSerializer(serializers.ModelSerializer):
