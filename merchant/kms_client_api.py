@@ -18,9 +18,9 @@ class KMSCLIENTAPI:
         HTTP Headers for the requests
     KMS_BASE_URL : str
         api server base url for requests
-    ACCESS_TOKEN : str
+    acess_token : str
         jwt access token
-    REFRESH_TOKEN : str
+    refresh_token : str
         jwt refresh token
 
     Methods
@@ -36,7 +36,7 @@ class KMSCLIENTAPI:
     """
     
     KMS_BASE_URL = settings.KMS_BASE_URL
-    ACCESS_TOKEN, REFRESH_TOKEN = get_jwt_tokens()
+    access_token, refresh_token = get_jwt_tokens()
 
     def __init__(self):
         self._headers = None
@@ -45,7 +45,7 @@ class KMSCLIENTAPI:
     @property
     def headers(self):
         return self._headers
-        
+
 
     @headers.setter
     def headers(self, token):
@@ -63,7 +63,7 @@ class KMSCLIENTAPI:
     @check_dek_cache
     def request_dek(self, key_name):
         """Gets and returns DEK"""
-        self.headers = (KMSCLIENTAPI.ACCESS_TOKEN, False)
+        self.headers = (KMSCLIENTAPI.access_token, False)
         r = requests.get(
             f'{KMSCLIENTAPI.KMS_BASE_URL}/keys/dek',
             headers=self.headers,
@@ -77,15 +77,14 @@ class KMSCLIENTAPI:
             logger.info('Sent Successful DEK Request to KMS')
             return dek
         else:  
-            KMSCLIENTAPI.ACCESS_TOKEN = self._refresh_token()
+            KMSCLIENTAPI.access_token = self._refresh_token()
             dek = self.request_dek(key_name)
             return dek
             
 
     def _refresh_token(self):
         """Gets and returns new access token"""
-        self.headers = (KMSCLIENTAPI.REFRESH_TOKEN, True)
-        print("Refresh Token", self.headers)
+        self.headers = (KMSCLIENTAPI.refresh_token, True)
         r = requests.post(
             f'{KMSCLIENTAPI.KMS_BASE_URL}/token_refresh',
             headers=self.headers
