@@ -43,7 +43,6 @@ class MerchantProfileViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         """Create Merchant profile"""
-
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -54,201 +53,71 @@ class MerchantProfileViewSet(viewsets.ModelViewSet):
         logger.info(f'Created Merchant Profile')
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
-    def update(self, *args, **kwargs):
-        pass
-
     def partial_update(self, *args, **kwargs):
         pass
 
     def get_permissions(self):
-        """
-        Set custom permissions for each action.
-        Create, retrieve', 'update', 'partial_update',
-        leverage DEFAULT_PERMISSION_CLASSES
-        """
         permission_classes = list()
         if self.action == 'list':
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
 
 
-
-
-
-# Create your views here.
-class TransactionProcessing(APIView):
+class OperatorProfileViewSet(viewsets.ModelViewSet):
     """
-    Process an IntelliPOS Transaction
+    Operator Profile ViewSet
     """
+    serializer_class = POSTerminalSerializer
+    queryset = POSTerminal.objects.all()
 
-    def post(self, request, id, format=None):
-        snippet = self.get_object(id)
-        serializer = TransactionSerializer(snippet, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def create(self, request, *args, **kwargs):
+        pass
+
+    def retrieve(self, request, *args, **kwargs):
+        pass
+
+    def partial_update(self, request, *args, **kwargs):
+        pass
 
 
-class DEKViewSet(APIView):
+class POSTerminalViewSet(viewsets.ModelViewSet):
     """
-    Get DEK Viewset
+    POS Terminal ViewSet
     """
+    serializer_class = POSTerminalSerializer
+    queryset = POSTerminal.objects.all()
 
-    def get(self, request):
-        key_name = self.request.GET.get('key_name')
-        message = KMSCLIENTAPI().request_dek(key_name)
-        return JsonResponse(status=200, data={'message': f'{message}'})
+    def create(self, request, *args, **kwargs):
+        pass
 
+    def retrieve(self, request, *args, **kwargs):
+        pass
 
-class ResetPassword(APIView):
-    def get(self, request):
-        email = self.request.POST.get('email')
-        print(email)
-        user = User.objects.filter(email=email).first()
-        if user is not None:
-            otp = random.randint(0, 99999)
-            user.otp = str(otp)
-            user.save()
-            html_message = render_to_string('merchant/password_reset.html', {'otp': otp})
-            plain_message = strip_tags(html_message)
-            send_mail(
-                'IntelliPOS Password Reset',
-                plain_message,
-                'timothytakudzwa@gmail.com',
-                [email],
-                html_message=html_message,
-                fail_silently=False,
-            )
-            return JsonResponse(status=200, data={'success': True, 'message': "OTP Sent"})
-        else:
-            return JsonResponse(status=200, data={'success': False, 'message': "Invalid Email"})
-
-    def post(self, request):
-        data = self.request.POST.get('data')
-        email = self.request.POST.get('email')
-        action = self.request.POST.get('action')
-        user = User.objects.filter(email=email).first()
-        if user is not None:
-            if action == 'verify_otp':
-                if data == user.otp:
-                    success = True
-                    message = 'OTP Match'
-                else:
-                    success = False
-                    message = 'OTP Mismatch'
-            else:
-                if not password_used(user, data.encode('utf8')):
-                    user.password = bcrypt.hashpw(data.encode('utf8'), bcrypt.gensalt()).decode()
-                    user.password_change = datetime.datetime.now() + datetime.timedelta(3 * 30)
-                    user.save()
-                    success = True
-                    message = "Password Updated"
-                else:
-                    success = False
-                    message = "You cannot repeat a password you have used before"
-        else:
-            success = False
-            message = "User Does not Exist"
-        return JsonResponse(status=200, data={'success': success, 'message': message})
+    def partial_update(self, request, *args, **kwargs):
+        pass
 
 
-class RegisterViewSet(APIView):
-    """
-    Register User ViewSet
-    """
-
-    def post(self, request):
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        company_id = request.POST.get('company_id')
-        email = request.POST.get('email_address')
-        merchant = Merchant.objects.filter(id=int(company_id)).first()
-        token = uuid.uuid4().hex[:100]
-        username_exists = User.objects.filter(username=username).exists()
-        email_exists = User.objects.filter(email=email).exists()
-        password = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt()).decode()
-        dek = KMSCLIENTAPI().request_dek('token_key')
-        print(dek)
-        print(password.encode('utf8'))
-        cipher_text = NISTApprovedCryptoAlgo['AES'].value.handle_pt(dek, password)
-
-        if username_exists:
-            return JsonResponse(status=401, data={'detail': 'Username Exists'})
-        if email_exists:
-            return JsonResponse(status=401, data={'detail': 'Email Exists'})
-
-        user = User(username=username, password=password, email=email, role='TELLER',
-                    first_name=first_name, last_name=last_name, pass_hash=cipher_text, \
-                    merchant=merchant)
-        user.save()
-        full_name = first_name + ' ' + last_name
-        pos_id = uuid.uuid4().hex[:5]
-        pos = IntelliPos(merchant=merchant, pos_id=pos_id)
+    @action(detail=True, methods=['post'])
+    def assign_operator(self, request, *args, **kwargs):
+        """Assigns Operator to a POS Terminal"""
+        pos = self.get_object()
+        pos.operator = 'some operator attribute value from client'
         pos.save()
-
-        send_mail(
-            'IntelliPOS Merchant Account',
-            create_account_email_user.format(full_name, merchant.name, 'TELLER', username, pos_id),
-            'timothytakudzwa@gmail.com',
-            [email],
-            fail_silently=False,
-        )
-        return JsonResponse(status=200, data={'detail': 'User Created Succesfully'})
+        data = {
+            'message': 'Operator Assigned',
+        }
+        logger.info(f'message')
+        return Response(data, status=status.HTTP_200_OK, headers=headers)
+ 
 
 
-class LoginViewSet(APIView):
-    """
-    Login to Merchant Application Viewset
-    """
-
-    def post(self, request):
-        try:
-            data = request.data
-            username = data['username']
-            password = data['password']
-            pos_id = data['posID']
-            device = data['device']
-            # Authenticate
-            authenticated, description = IntelliPos.authenticate(username, password.encode('utf8'), pos_id, device)
-            if authenticated:
-                return JsonResponse(status=200, data={'success': True, 'detail': description})
-            else:
-                return JsonResponse(status=200, data={'success': False, 'detail': description})
-        except Exception as e:
-            print(e)
-            return JsonResponse(status=500, data={'details': 'Invalid Request'})
 
 
-class TransactionViewSet(APIView):
-    """
-    Retrieve, update or delete a transaction instance.
-    """
-    permission_classes = (IsAuthenticated,)
 
-    def get_object(self, id):
-        try:
-            return Transaction.objects.get(id=id)
-        except Transaction.DoesNotExist:
-            raise Http404
 
-    def get(self, request, id, format=None):
-        # url = 'http://45.55.44.41:8003/api/v1/keys'
-        # access_token = get_access_token('intellipos')
-        # headers = {"Content-Type": "application/json", "Authorization": f"access_token {access_token}"}
-        # r = requests.get(url, headers=headers)
-        # print(r.json())
 
-        transaction = self.get_object(id)
-        serializer = TransactionSerializer(transaction)
-        return Response(serializer.data)
 
-    def post(self, request, id, format=None):
-        snippet = self.get_object(id)
-        serializer = TransactionSerializer(snippet, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+

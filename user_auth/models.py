@@ -100,3 +100,67 @@ class User(AbstractBaseUser, PermissionsMixin):
 #             return False
 
 
+    # @classmethod
+    # def authenticate(cls, username, password, posId, device):
+    #     user = User.objects.filter(username=username).first()
+    #     if user is None:
+    #         return False, 'Username does not exist'
+    #     if user.locked:
+    #         time_difference = user.unlocks_at.replace(tzinfo=None) - datetime.datetime.now().replace(tzinfo=None)
+    #         minutes = time_difference.seconds // 60
+    #         print(minutes)
+    #         if minutes < 30:
+    #             return False, 'This Account is Locked'
+    #         else:
+    #             user.locked = False
+    #             user.pin_tries = 3
+    #             user.save()
+    #     if user.password_change < datetime.date.today():
+    #         return False, 'Password has expired'
+    #     pos = cls.objects.filter(pos_id=posId).filter(merchant=user.merchant).first()
+    #     if pos is None:
+    #         return False, 'Invalid POS ID'
+    #     if bcrypt.checkpw(password, user.password.encode("utf-8")):
+    #         pos.active_user = user
+    #         pos.last_logged_device = device
+    #         pos.last_active_time = datetime.datetime.now()
+    #         pos.is_logged_in = True
+    #         pos.save()
+    #         return True, 'Login Successful'
+    #     else:
+    #         user.pin_tries = user.pin_tries - 1
+    #         if user.pin_tries < 1:
+    #             user.pin_tries = 0
+    #             user.locked = True
+    #             user.unlocks_at = datetime.datetime.now() + datetime.timedelta(minutes=30)
+    #         user.save()
+    #         return False, 'Wrong username / password'
+
+
+# class PasswordHistory(models.Model):
+#     """
+#     Model Class to save the last 4 password of a merchant
+#     """
+#     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
+#     password_hash = models.BinaryField(blank=True, null=True)
+#     date = models.DateField(default=timezone.now)
+
+#     @classmethod
+#     def get_user_history(cls, user):
+#         return cls.objects.filter(user=user).order_by('-date')[:4].all()
+
+#     @staticmethod
+#     def password_used(user, password):
+#         history = PasswordHistory.get_user_history(user)
+#         if history is not None:
+#             PasswordHistory(password_hash=password, user=user).save()
+#             return False
+#         else:
+#             for inst in history:
+#                 dek = KMSCLIENTAPI().request_dek('token_key')
+#                 plain_text = NISTApprovedCryptoAlgo['AES'].value.handle_ct(dek, inst.password)
+#                 if plain_text == password:
+#                     return True
+#                 else:
+#                     PasswordHistory(password_hash=inst.password, user=user).save()
+#                     return False
