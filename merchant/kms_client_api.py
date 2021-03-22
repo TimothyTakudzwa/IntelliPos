@@ -41,9 +41,11 @@ class KMSCLIENTAPI:
     def __init__(self):
         self._headers = None
 
+
     @property
     def headers(self):
         return self._headers
+        
 
     @headers.setter
     def headers(self, token):
@@ -56,6 +58,7 @@ class KMSCLIENTAPI:
             )
             token = refresh_token if refresh else token = access_token
         self._headers = {'Authorization': f'Bearer {token}'}
+
 
     @check_dek_cache
     def request_dek(self, key_name):
@@ -78,6 +81,7 @@ class KMSCLIENTAPI:
             dek = self.request_dek(key_name)
             return dek
             
+
     def _refresh_token(self):
         """Gets and returns new access token"""
         self.headers = (KMSCLIENTAPI.REFRESH_TOKEN, True)
