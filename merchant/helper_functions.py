@@ -21,5 +21,9 @@ def get_jwt_tokens():
     """
     Gets and returns JWT tokens from cache
     """
-    tokens = cache.get_many(['access_token', 'refresh_token'])
-    return tokens['access_token'], tokens['refresh_token']
+    if cache.has_key('access_token') and cache.has_key('refresh_token'):         
+        tokens = cache.get_many(['access_token', 'refresh_token'])
+        return tokens['access_token'], tokens['refresh_token']
+    else:
+        return None,None
+     
