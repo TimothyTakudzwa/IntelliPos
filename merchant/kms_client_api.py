@@ -3,7 +3,7 @@ import requests
 from django.conf import settings
 from django.core.cache import cache
 
-from helper_functions import check_dek_cache, get_jwt_tokens
+from .helper_functions import check_dek_cache, get_jwt_tokens
 
 logger = logging.getLogger('gunicorn.error')
 
@@ -56,7 +56,7 @@ class KMSCLIENTAPI:
                 settings.KMS_USERNAME,
                 settings.KMS_PASSWORD
             )
-            token = refresh_token if refresh else token = access_token
+            token = refresh_token if refresh else access_token
         self._headers = {'Authorization': f'Bearer {token}'}
 
 
