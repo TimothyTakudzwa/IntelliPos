@@ -64,6 +64,11 @@ class OperatorProfile(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
+    merchant = models.ForeignKey(
+        MerchantProfile, 
+        on_delete=models.CASCADE,
+        related_name='operators'
+    )
 
     def __str__(self):
         return f'{self.phone_number}'
@@ -102,7 +107,7 @@ class POSTerminal(models.Model):
             # get the operator instance using the
             # operator argument received in this function
             # assign the instance to our model property as shown below
-        self.operator_profile = operator
+            self.operator_profile = operator
 
 
 

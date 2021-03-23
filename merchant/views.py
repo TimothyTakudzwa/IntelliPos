@@ -15,12 +15,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from allauth.account import app_settings as allauth_settings
-from rest_auth.registration.views import RegisterView
-from rest_auth.app_settings import (
-    TokenSerializer,
-    JWTSerializer,
-    create_token
-)
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
@@ -47,14 +41,17 @@ class MerchantProfileViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
+        message = 'Created Merchant Profile'
         data = {
-            'message': 'Profile successfully created',
+            'message': message,
         }
-        logger.info(f'Created Merchant Profile')
+        logger.info(message)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
+
 
     def partial_update(self, *args, **kwargs):
         pass
+
 
     def get_permissions(self):
         permission_classes = list()
@@ -71,10 +68,21 @@ class OperatorProfileViewSet(viewsets.ModelViewSet):
     queryset = POSTerminal.objects.all()
 
     def create(self, request, *args, **kwargs):
-        pass
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        message = 'Created Operator Profile'
+        data = {
+            'message': message,
+        }
+        logger.info(message)
+        return Response(data, status=status.HTTP_201_CREATED, headers=headers)
+
 
     def retrieve(self, request, *args, **kwargs):
         pass
+
 
     def partial_update(self, request, *args, **kwargs):
         pass
@@ -88,10 +96,21 @@ class POSTerminalViewSet(viewsets.ModelViewSet):
     queryset = POSTerminal.objects.all()
 
     def create(self, request, *args, **kwargs):
-        pass
+         serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        message = 'Created POS Terminal'
+        data = {
+            'message': message,
+        }
+        logger.info(message)
+        return Response(data, status=status.HTTP_201_CREATED, headers=headers)
+
 
     def retrieve(self, request, *args, **kwargs):
         pass
+
 
     def partial_update(self, request, *args, **kwargs):
         pass
@@ -103,10 +122,11 @@ class POSTerminalViewSet(viewsets.ModelViewSet):
         pos = self.get_object()
         pos.operator = 'some operator attribute value from client'
         pos.save()
+        message = 'Assigned Operator'
         data = {
-            'message': 'Operator Assigned',
+            'message': message,
         }
-        logger.info(f'message')
+        logger.info(message)
         return Response(data, status=status.HTTP_200_OK, headers=headers)
  
 

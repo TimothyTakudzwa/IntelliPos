@@ -20,7 +20,7 @@ class MerchantProfileSerializer(serializers.ModelSerializer):
 class OperatorProfileSerializer(serializers.ModelSerializer):
     phone_number = PhoneNumberField()
     class Meta:
-        model = MerchantProfile
+        model = OperatorProfile
         fields = ('first_name', 'last_name', 'phone_number'),
 
     def create(self, validated_data):
@@ -30,7 +30,7 @@ class OperatorProfileSerializer(serializers.ModelSerializer):
 class POSTerminalSerializer(serializers.ModelSerializer):
     class Meta:
         model = POSTerminal
-        fields = (),
+        fields = ('pos_id'),
 
     def create(self, validated_data):
         pass
