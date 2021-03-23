@@ -96,7 +96,7 @@ class POSTerminalViewSet(viewsets.ModelViewSet):
     queryset = POSTerminal.objects.all()
 
     def create(self, request, *args, **kwargs):
-         serializer = self.get_serializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
