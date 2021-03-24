@@ -10,7 +10,7 @@ class MerchantProfileSerializer(serializers.ModelSerializer):
     phone_number = PhoneNumberField()
     class Meta:
         model = MerchantProfile
-        fields = ('name', 'country', 'phone_number','address'),
+        fields = ('name', 'country', 'phone_number','address')
 
     def create(self, validated_data):
         user = self.context.get("request").user
@@ -21,7 +21,7 @@ class OperatorProfileSerializer(serializers.ModelSerializer):
     phone_number = PhoneNumberField()
     class Meta:
         model = OperatorProfile
-        fields = ('first_name', 'last_name', 'phone_number'),
+        fields = ('first_name', 'last_name', 'phone_number')
 
     def create(self, validated_data):
         pass

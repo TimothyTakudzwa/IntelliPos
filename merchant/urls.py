@@ -6,7 +6,7 @@ from merchant import views
 from .views import *
 
 router = routers.DefaultRouter()
-
+router.register('merchants', MerchantProfileViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
