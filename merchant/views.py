@@ -13,6 +13,7 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.decorators import action
 
 from allauth.account import app_settings as allauth_settings
 from rest_framework import status, viewsets
@@ -44,10 +45,12 @@ class MerchantProfileViewSet(viewsets.ModelViewSet):
         message = 'Created Merchant Profile'
         data = {
             'message': message,
-        }
+       }
         logger.info(message)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
+    def retrieve(self, request):
+        pass
 
     def partial_update(self, *args, **kwargs):
         pass
@@ -75,7 +78,7 @@ class OperatorProfileViewSet(viewsets.ModelViewSet):
         message = 'Created Operator Profile'
         data = {
             'message': message,
-        }
+       }
         logger.info(message)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
@@ -125,9 +128,9 @@ class POSTerminalViewSet(viewsets.ModelViewSet):
         message = 'Assigned Operator'
         data = {
             'message': message,
-        }
+       }
         logger.info(message)
-        return Response(data, status=status.HTTP_200_OK, headers=headers)
+        return Response(data)
  
 
 

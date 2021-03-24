@@ -26,15 +26,4 @@ class OTP:
         if cache.has_key(self.to_number):
             return cache.get(self.to_number) == otp
         else:
-            return False
-
-
-# Usage
-# Generate
-otp = OTP('0773737828').generate()
-print(f'---------- OTP {otp} ------------')
-
-# Verify
-valid = OTP('0773737828').verify(otp)
-
-print(f'---------- Valid {valid} ------------')
+            return self.generate()

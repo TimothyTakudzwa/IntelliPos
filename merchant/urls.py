@@ -6,8 +6,7 @@ from merchant import views
 from .views import *
 
 router = routers.DefaultRouter()
-# router.register(r'users', RegisterViewSet)
-# router.register(r'transactions', TransactionViewSet )
+
 
 urlpatterns = [
     path('', include(router.urls)),

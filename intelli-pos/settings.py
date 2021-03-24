@@ -122,7 +122,6 @@ WSGI_APPLICATION = 'intelli-pos.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': env('DATABASE_NAME'),
@@ -130,8 +129,6 @@ DATABASES = {
         'PASSWORD': env('PASSWORD'),
         'HOST': env('HOST'),
         'PORT': env('PORT'),
-    }
-
     }
 
 }
@@ -236,5 +233,5 @@ KMS_PASSWORD = env('KMS_PASSWORD')
 
 # OTP
 OTP_LENGTH = 6
-OTP_TTL = 3600
+OTP_TTL = 180
 OTP_DIGITS = '0123456789'
