@@ -18,7 +18,7 @@ class AccountVerification(APIView):
     def get(self, request, *args, **kwargs):
         phone = kwargs['phone']
         otp = OTP(phone).generate()
-        message = f'<#> ExampleApp: Your code is {otp} MoohrBwcY1d'
+        message = f'<%23> ExampleApp: Your code is {otp} MoohrBwcY1d'
         send_sms(phone, message)
         data = {'message':'OTP Sent'}
         return Response(data)
