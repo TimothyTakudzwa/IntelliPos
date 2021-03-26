@@ -22,7 +22,7 @@ class RegistrationSerializer(RegisterSerializer):
 
     def validate_is_merchant_admin(self, is_merchant_admin):
         if not isinstance(is_merchant_admin, bool):
-            raise serializers.ValidationError(_("is_merchant_admin should be a boolean value"))
+            raise serializers.ValidationError(_("is_merchant_admin should be True/False"))
         return is_merchant_admin
 
 
