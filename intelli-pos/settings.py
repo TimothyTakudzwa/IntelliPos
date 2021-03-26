@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG')
+DEBUG = True
 
 ALLOWED_HOSTS = ['45.55.44.41', '127.0.0.1']
 
@@ -180,10 +180,14 @@ AUTH_USER_MODEL = 'user_auth.User'
 # Django Rest Auth
 REST_USE_JWT = True
 
-# Override defualt REST Auth Login
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'user_auth.serializers.UserDetailsSerializer',
 }
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'user_auth.serializers.RegistrationSerializer',
+}
+
 
 # JWT 
 JWT_AUTH_COOKIE = 'access_token'
@@ -211,6 +215,8 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+ACCOUNT_ADAPTER = 'user_auth.adapters.UserAccountAdapter'
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
