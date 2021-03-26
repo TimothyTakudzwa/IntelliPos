@@ -6,6 +6,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from .two_factor_auth import OTP
+from .helper_functions import send_sms
 
 logger = logging.getLogger('gunicorn.error')
 
@@ -17,7 +18,9 @@ class AccountVerification(APIView):
     def get(self, request, *args, **kwargs):
         phone = kwargs['phone']
         otp = OTP(phone).generate()
-        data = {'otp':otp}
+        message = f'<%23> ExampleApp: Your code is {otp} MoohrBwcY1d'
+        send_sms(phone, message)
+        data = {'message':'OTP Sent'}
         return Response(data)
  
 
