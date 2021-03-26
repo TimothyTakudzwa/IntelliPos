@@ -132,10 +132,10 @@ WSGI_APPLICATION = 'intelli-pos.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-
+# postgresql_psycopg2 env('DATABASE_NAME')
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DATABASE_NAME'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'intelli-pos.sqlite3',
         'USER': env('USER'),
         'PASSWORD': env('PASSWORD'),
         'HOST': env('HOST'),
