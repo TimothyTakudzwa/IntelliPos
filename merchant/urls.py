@@ -8,6 +8,7 @@ from .views import *
 router = routers.DefaultRouter()
 router.register('merchants', MerchantProfileViewSet) 
 
+# Nested
 # Merchant
 # merchants/                                                create
 # merchant/{pk}                                             retrieve/update/delete
@@ -23,6 +24,15 @@ router.register('merchants', MerchantProfileViewSet)
 # Merchant Operators
 # merchants/{pk}/operators/                                 create/list                         
 # merchants/{pk}/pos_terminals/{pk}                         (re)assign/retrieve/update/delete
+
+
+# Non-Nested Routers
+
+# pos_terminals/                                             create/list
+# pos_terminals?merchant_id=123                              retrieve/update/delete
+
+# operators/                                                 create/list
+# operators?merchant_id=1                                    retrieve/update/delete
 
 
 urlpatterns = [
