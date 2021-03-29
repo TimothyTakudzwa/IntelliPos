@@ -100,7 +100,7 @@ class POSTerminal(models.Model):
         super().save(update_fields=['pos_id'])
   
     def __str__(self):
-        return f'{pos_id}'
+        return f'{self.pos_id}'
 
     @property
     def operator(self):

@@ -8,7 +8,7 @@ from .views import *
 # Non-Nested Routers
 router = routers.DefaultRouter()
 router.register('merchants', MerchantProfileViewSet) 
-router.register('pos_terminals', POSTerminalViewSet) 
+router.register('pos_terminals', POSTerminalViewSet, basename='POSTerminal') 
 router.register('operators', OperatorProfileViewSet) 
 
 # merchant/                                                 create/list

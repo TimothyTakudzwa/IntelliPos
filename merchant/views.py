@@ -38,7 +38,17 @@ class POSTerminalViewSet(viewsets.ModelViewSet):
     """
     permission_classes = [IsAuthenticated, IsMerchantAdminUser]
     serializer_class = POSTerminalSerializer
-    queryset = POSTerminal.objects.all()
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = POSTerminal.objects.all()
+        merchant_id = self.request.query_params.get('merchant_id')
+        if merchant_id is not None:
+            queryset = queryset.filter(merchant__pk=merchant_id)
+        return queryset
 
 
     @action(detail=True, methods=['post'])
