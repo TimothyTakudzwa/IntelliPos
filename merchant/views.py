@@ -28,8 +28,8 @@ class OperatorProfileViewSet(viewsets.ModelViewSet):
     """
     Operator Profile ViewSet
     """
-    serializer_class = POSTerminalSerializer
-    queryset = POSTerminal.objects.all()
+    serializer_class = OperatorProfileSerializer
+    queryset = OperatorProfile.objects.all()
 
 
 class POSTerminalViewSet(viewsets.ModelViewSet):
