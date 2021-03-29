@@ -10,7 +10,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 from user_auth.models import User
 from .constants import BANKS
 from .crypto import NISTApprovedCryptoAlgo
-from .kms_client_api import KMSCLIENTAPI
 
 
 class MerchantProfile(models.Model):
@@ -62,13 +61,15 @@ class OperatorProfile(models.Model):
     phone_number = PhoneNumberField()
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
     )
     merchant = models.ForeignKey(
         MerchantProfile, 
         on_delete=models.CASCADE,
         related_name='operators'
     )
+
+
 
     def __str__(self):
         return f'{self.phone_number}'
@@ -92,6 +93,11 @@ class POSTerminal(models.Model):
         on_delete=models.CASCADE,
         related_name='pos_terminals'
     )
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.pos_id = f'IntelliPOS-{self.pk}'
+        super().save(update_fields=['pos_id'])
   
     def __str__(self):
         return f'{pos_id}'
@@ -104,12 +110,10 @@ class POSTerminal(models.Model):
     def operator(self, operator):
         """Sets POS Operator"""
         if operator:
-            # get the operator instance using the
-            # operator argument received in this function
-            # assign the instance to our model property as shown below
+            operator = operator.objects.get(pk=operator)
             self.operator_profile = operator
-
-
+        else:
+            self.operator_profile = None
 
 
 class Transaction(models.Model):

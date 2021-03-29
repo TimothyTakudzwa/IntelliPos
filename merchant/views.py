@@ -36,6 +36,7 @@ class POSTerminalViewSet(viewsets.ModelViewSet):
     """
     POS Terminal ViewSet
     """
+    permission_classes = [IsAuthenticated, IsMerchantAdminUser]
     serializer_class = POSTerminalSerializer
     queryset = POSTerminal.objects.all()
 
@@ -44,12 +45,26 @@ class POSTerminalViewSet(viewsets.ModelViewSet):
     def assign_operator(self, request, *args, **kwargs):
         """Assigns Operator to a POS Terminal"""
         pos = self.get_object()
-        pos.operator = request.data['operator']
+        pos.operator = request.data['operator_id']
         pos.save()
         message = 'Assigned Operator'
         data = {
             'message': message,
        }
+        logger.info(message)
+        return Response(data)
+
+    
+    @action(detail=True, methods=['post'])
+    def unassign_operator(self, request, *args, **kwargs):
+        """Unassigns Operator from a POS Terminal"""
+        pos = self.get_object()
+        pos.operator = None
+        pos.save()
+        message = 'Unassigned Operator'
+        data = {
+            'message': message,
+        }
         logger.info(message)
         return Response(data)
  

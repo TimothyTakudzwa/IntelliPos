@@ -3,6 +3,7 @@ from django_countries.serializer_fields import CountryField
 from phonenumber_field.serializerfields import PhoneNumberField
 
 from merchant.models import *
+from user_auth.serializers import UserDetailsSerializer
 
 
 class MerchantProfileSerializer(serializers.ModelSerializer):
@@ -19,19 +20,27 @@ class MerchantProfileSerializer(serializers.ModelSerializer):
 
 class OperatorProfileSerializer(serializers.ModelSerializer):
     phone_number = PhoneNumberField()
+    user =  UserDetailsSerializer()
     class Meta:
         model = OperatorProfile
-        fields = ('first_name', 'last_name', 'phone_number')
+        fields = ('first_name', 'last_name', 'user')
 
     def create(self, validated_data):
-        pass
+        merchant_id = self.context.get("request").query_params.get('merchant_id')
+        merchant = MerchantProfile.objects.get(pk=merchant_id)
+        user = validated_data.props('user')
+        return POSTerminal.objects.create(merchant=merchant, **validated_data)
 
 
 class POSTerminalSerializer(serializers.ModelSerializer):
+    operator = OperatorProfileSerializer(read_only=True)
     class Meta:
         model = POSTerminal
-        fields = ('pos_id'),
+        fields = ('pos_id', 'operator')
+        read_only_fields = fields
 
     def create(self, validated_data):
-        pass
+        merchant_id = self.context.get("request").query_params.get('merchant_id')
+        merchant = MerchantProfile.objects.get(pk=merchant_id)
+        return POSTerminal.objects.create(merchant=merchant, **validated_data)
   

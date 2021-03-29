@@ -5,38 +5,27 @@ from rest_framework_simplejwt import views as jwt_views
 from merchant import views
 from .views import *
 
+# Non-Nested Routers
 router = routers.DefaultRouter()
 router.register('merchants', MerchantProfileViewSet) 
+router.register('pos_terminals', POSTerminalViewSet) 
+router.register('operators', OperatorProfileViewSet) 
 
-# Nested
-# Merchant
-# merchants/                                                create
-# merchant/{pk}                                             retrieve/update/delete
+# merchant/                                                 create/list
+# merchant/<int:pk>/                                        retrieve/update/delete
 
-# Merchant Banks
-# merchant/{pk}/banks/                                      create/list
-# merchant/{pk}/banks/{pk}                                  retrieve/update/delete
+# banks/                                                    create/list
+# banks/<int:pk>/                                           retrieve/update/delete
 
-# Merchant POS terminals
-# merchants/{pk}/pos_terminals/                             create/list
-# merchants/{pk}/pos_terminals/{pk}                         (re)assign/retrieve/update/delete
-
-# Merchant Operators
-# merchants/{pk}/operators/                                 create/list                         
-# merchants/{pk}/pos_terminals/{pk}                         (re)assign/retrieve/update/delete
-
-
-# Non-Nested Routers
-
-# pos_terminals/                                             create/list
-# pos_terminals?merchant_id=123                              retrieve/update/delete
+# pos_terminals/                                             create
+# pos_terminals/<int:pk>/                                    retrieve/update/delete
+# pos_terminals/<int:pk>/assign_operator/                    assign operator
 
 # operators/                                                 create/list
-# operators?merchant_id=1                                    retrieve/update/delete
+# operators/<int:pk>/                                        retrieve/update/delete
 
 
 urlpatterns = [
     path('', include(router.urls)),
 
 ]
-

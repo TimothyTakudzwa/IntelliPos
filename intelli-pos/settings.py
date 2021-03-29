@@ -122,6 +122,7 @@ WSGI_APPLICATION = 'intelli-pos.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
+    
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': env('DATABASE_NAME'),
@@ -206,6 +207,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 
