@@ -110,7 +110,7 @@ class POSTerminal(models.Model):
     def operator(self, operator):
         """Sets POS Operator"""
         if operator:
-            operator = operator.objects.get(pk=operator)
+            operator = OperatorProfile.objects.get(pk=operator)
             self.operator_profile = operator
         else:
             self.operator_profile = None
