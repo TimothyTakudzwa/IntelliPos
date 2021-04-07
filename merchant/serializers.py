@@ -36,7 +36,7 @@ class POSTerminalSerializer(serializers.ModelSerializer):
     operator = OperatorProfileSerializer(read_only=True)
     class Meta:
         model = POSTerminal
-        fields = ('pos_id', 'operator')
+        fields = ('pk','pos_id', 'operator')
         read_only_fields = fields
 
     def create(self, validated_data):
