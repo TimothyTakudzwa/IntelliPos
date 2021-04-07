@@ -36,7 +36,7 @@ class POSTerminalViewSet(viewsets.ModelViewSet):
     """
     POS Terminal ViewSet
     """
-    permission_classes = [IsAuthenticated, IsMerchantAdminUser]
+    permission_classes = [IsAuthenticated, IsMerchantAdminUser, IsOwner]
     serializer_class = POSTerminalSerializer
 
     def get_queryset(self):
