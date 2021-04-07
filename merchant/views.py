@@ -39,6 +39,7 @@ class POSTerminalViewSet(viewsets.ModelViewSet):
     """
     permission_classes = [IsAuthenticated, IsMerchantAdminUser, IsOwner]
     serializer_class = POSTerminalSerializer
+    queryset = POSTerminal.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['merchant']
     
