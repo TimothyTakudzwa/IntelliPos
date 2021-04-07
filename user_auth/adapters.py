@@ -9,9 +9,8 @@ class UserAccountAdapter(DefaultAccountAdapter):
         Saves a new `User` instance using information provided in the
         signup form.
         """
-        from allauth.account.utils import user_field
-
+    
         user = super().save_user(request, user, form, False)
-        user_field(user, 'is_merchant_admin', True)
+        user.is_merchant_admin = True
         user.save()
         return user

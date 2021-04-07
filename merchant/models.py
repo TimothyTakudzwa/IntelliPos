@@ -92,10 +92,10 @@ class POSTerminal(models.Model):
         related_name='pos_terminals'
     )
 
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-    #     self.pos_id = f'IntelliPOS-{self.pk}'
-    #     super().save(update_fields=['pos_id'])
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.pos_id = f'IntelliPOS-{self.pk}'
+        super().save(update_fields=['pos_id'])
   
     def __str__(self):
         return f'{self.pos_id}'
