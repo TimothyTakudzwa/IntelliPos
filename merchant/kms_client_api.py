@@ -73,7 +73,7 @@ class KMSCLIENTAPI:
         if r.status_code == 200: 
             data = r.json()
             dek = data['dek'].encode('ISO-8859-1')
-            cache.set(key_name, dek, settings.CACHE_DEK_EXPIRY)
+            cache.set(key_name, dek, settings.CACHE_DEK_TTL)
             logger.info('Sent Successful DEK Request to KMS')
             return dek
         else:  
@@ -93,7 +93,7 @@ class KMSCLIENTAPI:
         cache.set(
             'access_token',
             data['access_token'],
-            settings.CACHE_JWT_EXPIRY
+            settings.CACHE_JWT_TTL
         )
         return data['access_token']
 
@@ -109,12 +109,12 @@ class KMSCLIENTAPI:
         cache.set(
             'access_token',
             data['access_token'],
-            settings.CACHE_JWT_EXPIRY
+            settings.CACHE_JWT_TTL
         )
         cache.set(
             'refresh_token',
             data['access_token'],
-            settings.CACHE_JWT_EXPIRY
+            settings.CACHE_JWT_TTL
         )
         logger.info('KMS Client Login - Acquired access and refresh tokens')
         return data['access_token'], data['refresh_token']

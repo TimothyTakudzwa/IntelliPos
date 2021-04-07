@@ -31,7 +31,7 @@ class AccountVerification(APIView):
         result = OTP(phone).verify(otp)
 
         if isinstance(result, bool) and result:
-            return Response({'message':'Correct OTP'})
+            return Response()
 
         elif isinstance(result, bool) and not result:
             data = {

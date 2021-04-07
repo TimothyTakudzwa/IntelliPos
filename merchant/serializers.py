@@ -11,7 +11,12 @@ class MerchantProfileSerializer(serializers.ModelSerializer):
     phone_number = PhoneNumberField()
     class Meta:
         model = MerchantProfile
-        fields = ('name', 'country', 'phone_number','address')
+        fields = (
+            'name', 
+            'country', 
+            'phone_number',
+            'address'
+        )
 
     def create(self, validated_data):
         user = self.context.get("request").user
@@ -24,16 +29,23 @@ class OperatorProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = OperatorProfile
-        fields = ('pk','first_name', 'last_name', 'phone_number', 'user')
+        fields = (
+            'pk',
+            'first_name', 
+            'last_name', 
+            'phone_number', 
+            'user'
+        )
       
     def create(self, validated_data):
-        merchant_id = self.context.get("request").query_params.get('merchant_id')
+        r = self.context.get("request")
+        merchant_id = r.query_params.get('merchant_id')
         merchant = MerchantProfile.objects.get(pk=merchant_id)
         user_data = validated_data.pop('user')
         user = User.objects.create_user(**user_data, password='')
         return OperatorProfile.objects.create(
             user=user, 
-            merchant = merchant,
+            merchant=merchant,
             **validated_data
         )
 
@@ -42,11 +54,16 @@ class POSTerminalSerializer(serializers.ModelSerializer):
     operator = OperatorProfileSerializer(read_only=True)
     class Meta:
         model = POSTerminal
-        fields = ('pk','pos_id', 'operator')
+        fields = (
+            'pk',
+            'pos_id', 
+            'operator'
+        )
         read_only_fields = fields
 
     def create(self, validated_data):
-        merchant_id = self.context.get("request").query_params.get('merchant_id')
+        r = self.context.get("request")
+        merchant_id = r.query_params.get('merchant_id')
         merchant = MerchantProfile.objects.get(pk=merchant_id)
         return POSTerminal.objects.create(merchant=merchant, **validated_data)
   
