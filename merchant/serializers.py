@@ -23,7 +23,7 @@ class OperatorProfileSerializer(serializers.ModelSerializer):
     user =  UserDetailsSerializer()
     class Meta:
         model = OperatorProfile
-        fields = ('first_name', 'last_name', 'user')
+        fields = ('pk', 'first_name', 'last_name', 'user')
 
     def create(self, validated_data):
         merchant_id = self.context.get("request").query_params.get('merchant_id')
