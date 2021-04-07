@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import action
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import *
 from .serializers import *
@@ -38,17 +39,9 @@ class POSTerminalViewSet(viewsets.ModelViewSet):
     """
     permission_classes = [IsAuthenticated, IsMerchantAdminUser, IsOwner]
     serializer_class = POSTerminalSerializer
-
-    def get_queryset(self):
-        """
-        Optionally restricts the returned purchases to a given user,
-        by filtering against a `username` query parameter in the URL.
-        """
-        queryset = POSTerminal.objects.all()
-        merchant_id = self.request.query_params.get('merchant_id')
-        if merchant_id is not None:
-            queryset = queryset.filter(merchant__pk=merchant_id)
-        return queryset
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['merchant']
+    
 
 
     @action(detail=True, methods=['post'])
