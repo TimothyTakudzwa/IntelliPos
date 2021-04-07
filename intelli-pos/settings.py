@@ -58,7 +58,7 @@ CACHE_DEK_EXPIRY = env('CACHE_DEK_EXPIRY')
 # Application definition
 
 INSTALLED_APPS = [
-
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'merchant',
     'rest_framework',
     'dj_rest_auth',
+    'django_filters',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

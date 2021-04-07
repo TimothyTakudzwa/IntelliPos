@@ -24,7 +24,7 @@ class OperatorProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = OperatorProfile
-        fields = ('first_name', 'last_name', 'phone_number', 'user')
+        fields = ('pk','first_name', 'last_name', 'phone_number', 'user')
       
     def create(self, validated_data):
         merchant_id = self.context.get("request").query_params.get('merchant_id')
@@ -42,7 +42,7 @@ class POSTerminalSerializer(serializers.ModelSerializer):
     operator = OperatorProfileSerializer(read_only=True)
     class Meta:
         model = POSTerminal
-        fields = ('pos_id','operator')
+        fields = ('pk','pos_id', 'operator')
         read_only_fields = fields
 
     def create(self, validated_data):
