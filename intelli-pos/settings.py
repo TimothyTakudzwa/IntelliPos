@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
+    'django_filters'
 
 ]
 
@@ -184,11 +185,6 @@ REST_USE_JWT = True
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'user_auth.serializers.UserDetailsSerializer',
 }
-
-REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'user_auth.serializers.RegistrationSerializer',
-}
-
 
 # JWT 
 JWT_AUTH_COOKIE = 'access_token'

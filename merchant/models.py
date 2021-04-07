@@ -69,8 +69,6 @@ class OperatorProfile(models.Model):
         related_name='operators'
     )
 
-
-
     def __str__(self):
         return f'{self.phone_number}'
 
@@ -94,10 +92,10 @@ class POSTerminal(models.Model):
         related_name='pos_terminals'
     )
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        self.pos_id = f'IntelliPOS-{self.pk}'
-        super().save(update_fields=['pos_id'])
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #     self.pos_id = f'IntelliPOS-{self.pk}'
+    #     super().save(update_fields=['pos_id'])
   
     def __str__(self):
         return f'{self.pos_id}'
@@ -110,7 +108,7 @@ class POSTerminal(models.Model):
     def operator(self, operator):
         """Sets POS Operator"""
         if operator:
-            operator = operator.objects.get(pk=operator)
+            operator = OperatorProfile.objects.get(pk=operator)
             self.operator_profile = operator
         else:
             self.operator_profile = None

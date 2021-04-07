@@ -10,9 +10,8 @@ class UserAccountAdapter(DefaultAccountAdapter):
         signup form.
         """
         from allauth.account.utils import user_field
-        is_merchant_admin = request.data.get('is_merchant_admin', '')
 
         user = super().save_user(request, user, form, False)
-        user_field(user, 'is_merchant_admin', request.data.get('is_merchant_admin', ''))
+        user_field(user, 'is_merchant_admin', True)
         user.save()
         return user

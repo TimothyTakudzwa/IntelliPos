@@ -17,7 +17,7 @@ router.register('operators', OperatorProfileViewSet)
 # banks/                                                    create/list
 # banks/<int:pk>/                                           retrieve/update/delete
 
-# pos_terminals/                                             create
+# pos_terminals/                                             create/list
 # pos_terminals/<int:pk>/                                    retrieve/update/delete
 # pos_terminals/<int:pk>/assign_operator/                    assign operator
 

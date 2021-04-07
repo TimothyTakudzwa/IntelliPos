@@ -1,6 +1,7 @@
 import logging
 
 from django.conf import settings
+from django.db import IntegrityError
 
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -11,6 +12,7 @@ from rest_framework.decorators import action
 from .models import *
 from .serializers import *
 from .permissions import IsMerchantAdminUser, IsOwner
+
 
 logger = logging.getLogger('gunicorn.error')
 
@@ -28,27 +30,20 @@ class OperatorProfileViewSet(viewsets.ModelViewSet):
     """
     Operator Profile ViewSet
     """
-    serializer_class = POSTerminalSerializer
-    queryset = POSTerminal.objects.all()
+    serializer_class = OperatorProfileSerializer
+    queryset = OperatorProfile.objects.all()
+    filterset_fields = ('merchant',)
+
 
 
 class POSTerminalViewSet(viewsets.ModelViewSet):
     """
     POS Terminal ViewSet
     """
+    queryset = POSTerminal.objects.all()
     permission_classes = [IsAuthenticated, IsMerchantAdminUser]
     serializer_class = POSTerminalSerializer
-
-    def get_queryset(self):
-        """
-        Optionally restricts the returned purchases to a given user,
-        by filtering against a `username` query parameter in the URL.
-        """
-        queryset = POSTerminal.objects.all()
-        merchant_id = self.request.query_params.get('merchant_id')
-        if merchant_id is not None:
-            queryset = queryset.filter(merchant__pk=merchant_id)
-        return queryset
+    filterset_fields = ('merchant',)
 
 
     @action(detail=True, methods=['post'])
