@@ -70,7 +70,7 @@ INSTALLED_APPS = [
     'merchant',
     'rest_framework',
     'dj_rest_auth',
-    'django_filters',
+   
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
