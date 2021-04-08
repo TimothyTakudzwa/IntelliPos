@@ -92,6 +92,9 @@ class POSTerminal(models.Model):
         related_name='pos_terminals'
     )
 
+    class Meta:
+        ordering= ['pos_id']
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.pos_id = f'IntelliPOS-{self.pk}'
