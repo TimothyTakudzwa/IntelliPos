@@ -93,7 +93,7 @@ class POSTerminal(models.Model):
     )
 
     class Meta:
-        ordering= ['pos_id']
+        ordering= ['pk']
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
