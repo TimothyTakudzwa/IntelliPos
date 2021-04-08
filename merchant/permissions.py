@@ -1,4 +1,5 @@
 from rest_framework import permissions
+from .models import OperatorProfile, POSTerminal, MerchantProfile
 
 class IsMerchantAdminUser(permissions.BasePermission):
     """
@@ -18,5 +19,9 @@ class IsOwner(permissions.BasePermission):
     message = 'Only Owner is allowed.'
 
     def has_object_permission(self, request, view, obj):
+        if isinstance(obj, MerchantProfile):
             return obj.user == request.user
+        else:
+            return obj.merchant.user == request.user
+
 

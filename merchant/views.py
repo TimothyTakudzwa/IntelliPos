@@ -31,6 +31,7 @@ class OperatorProfileViewSet(viewsets.ModelViewSet):
     """
     Operator Profile ViewSet
     """
+    permission_classes = [IsAuthenticated, IsMerchantAdminUser, IsOwner]
     serializer_class = OperatorProfileSerializer
     queryset = OperatorProfile.objects.all()
     filterset_fields = ('merchant',)
@@ -42,7 +43,7 @@ class POSTerminalViewSet(viewsets.ModelViewSet):
     POS Terminal ViewSet
     """
     queryset = POSTerminal.objects.all()
-    permission_classes = [IsAuthenticated, IsMerchantAdminUser]
+    permission_classes = [IsAuthenticated, IsMerchantAdminUser, IsOwner]
     serializer_class = POSTerminalSerializer
     filterset_fields = ('merchant',)
 
@@ -73,16 +74,3 @@ class POSTerminalViewSet(viewsets.ModelViewSet):
         }
         logger.info(message)
         return Response(data)
- 
-
-
-
-
-
-
-
-
-
-
-
-
