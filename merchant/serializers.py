@@ -38,8 +38,8 @@ class OperatorProfileSerializer(serializers.ModelSerializer):
         )
       
     def create(self, validated_data):
-        r = self.context.get("request")
-        merchant = r.user.merchant_profile
+        user = self.context.get("request").user
+        merchant = user.merchant_profile
         user_data = validated_data.pop('user')
         user = User.objects.create_user(**user_data, password='')
         return OperatorProfile.objects.create(
@@ -61,7 +61,7 @@ class POSTerminalSerializer(serializers.ModelSerializer):
         read_only_fields = fields
 
     def create(self, validated_data):
-        r = self.context.get("request")
-        merchant = r.user.merchant_profile
+        user = self.context.get("request").user
+        merchant = user.merchant_profile
         return POSTerminal.objects.create(merchant=merchant, **validated_data)
   
