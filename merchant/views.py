@@ -34,8 +34,14 @@ class OperatorProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsMerchantAdminUser, IsOwner]
     serializer_class = OperatorProfileSerializer
     queryset = OperatorProfile.objects.all()
-    filterset_fields = ('merchant',)
 
+    def get_queryset(self):
+        """
+        This view should return a list of all the operators
+        for the currently authenticated merchant admin user.
+        """
+        user = self.request.user
+        return self.queryset.filter(merchant=user.merchant_profile)
 
 
 class POSTerminalViewSet(viewsets.ModelViewSet):
@@ -45,7 +51,14 @@ class POSTerminalViewSet(viewsets.ModelViewSet):
     queryset = POSTerminal.objects.all()
     permission_classes = [IsAuthenticated, IsMerchantAdminUser, IsOwner]
     serializer_class = POSTerminalSerializer
-    filterset_fields = ('merchant',)
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the terminals
+        for the currently authenticated merchant admin user.
+        """
+        user = self.request.user
+        return self.queryset.filter(merchant=user.merchant_profile)
 
 
     @action(detail=True, methods=['post'])

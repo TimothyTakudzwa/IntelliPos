@@ -39,8 +39,7 @@ class OperatorProfileSerializer(serializers.ModelSerializer):
       
     def create(self, validated_data):
         r = self.context.get("request")
-        merchant_id = r.query_params.get('merchant')
-        merchant = MerchantProfile.objects.get(pk=merchant_id)
+        merchant = r.user.merchant_profile
         user_data = validated_data.pop('user')
         user = User.objects.create_user(**user_data, password='')
         return OperatorProfile.objects.create(
@@ -63,7 +62,6 @@ class POSTerminalSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         r = self.context.get("request")
-        merchant_id = r.query_params.get('merchant')
-        merchant = MerchantProfile.objects.get(pk=merchant_id)
+        merchant = r.user.merchant_profile
         return POSTerminal.objects.create(merchant=merchant, **validated_data)
   

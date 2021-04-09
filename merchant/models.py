@@ -22,7 +22,8 @@ class MerchantProfile(models.Model):
     address = models.CharField(max_length=255)
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='merchant_profile'
     )
 
     def __str__(self):
