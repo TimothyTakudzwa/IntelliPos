@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.conf import settings
 from dj_rest_auth import views
+from django.core.cache import cache
 
 from .two_factor_auth import OTP
 from .helper_functions import send_otp
@@ -19,8 +20,9 @@ class LoginView(views.LoginView):
             data = {
                 'error': {
                     'code':'005',
-                    'message':f'Maximum logon attempts reached, try again in {settings.USER_LOCKOUT_DURATION} minutes'}
+                    'message':f'Maximum logon attempts reached, try again in {cache.ttl(user)} minutes'}
             }
+            logger.warn(data)
             return Response(data, status.HTTP_403_FORBIDDEN)
 
     

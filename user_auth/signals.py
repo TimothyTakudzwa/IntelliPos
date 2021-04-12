@@ -6,6 +6,8 @@ from django.core.cache import cache
 
 from .models import User
 
+logger = logging.getLogger('gunicorn.error')
+
 user_failed_login = Signal(providing_args=["email"])
 
 
@@ -14,12 +16,14 @@ def increment_logon_attempts(sender, email, **kwargs):
     try:
         user = User.objects.get(email__exact=email)
     except User.DoesNotExist as e:
+        logger.warn(e)
         return
 
     user.logon_attempts += 1
     user.save()
     if user.logon_attempts > settings.USER_ALLOWED_LOGON_ATTEMPTS:
-        cache.set('locked_out_user',
+        cache.set(
+            user,
             user,
             settings.USER_LOCKOUT_DURATION 
         )
