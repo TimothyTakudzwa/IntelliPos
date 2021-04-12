@@ -21,7 +21,7 @@ class LoginView(views.LoginView):
                     'code':'005',
                     'message':f'Maximum logon attempts reached, try again in {settings.USER_LOCKOUT_DURATION} minutes'}
             }
-        return Response(data, status.HTTP_403_FORBIDDEN)
+            return Response(data, status.HTTP_403_FORBIDDEN)
 
     
     def login(self):
