@@ -14,16 +14,31 @@ logger = logging.getLogger('gunicorn.error')
 
 class LoginView(views.LoginView):
     
-    def get_response(self):
-        response = super().get_response()
-        if self.user.locked_out:
+    def deny(self, user):
+        if user.locked_out:
             data = {
                 'error': {
                     'code':'005',
                     'message':f'Maximum logon attempts reached, try again in {settings.USER_LOCKOUT_DURATION} minutes'}
             }
-            return Response(data, status.HTTP_403_FORBIDDEN)
-        return response
+        return Response(data, status.HTTP_403_FORBIDDEN)
+
+    
+    def login(self):
+        self.user = self.serializer.validated_data['user']
+
+        # Is this user locked out?
+        self.deny(self.user)
+
+        if getattr(settings, 'REST_USE_JWT', False):
+            self.access_token, self.refresh_token = jwt_encode(self.user)
+        else:
+            self.token = create_token(self.token_model, self.user,
+                                      self.serializer)
+
+        if getattr(settings, 'REST_SESSION_LOGIN', True):
+            self.process_login()
+     
 
 
 class AccountVerification(APIView):
