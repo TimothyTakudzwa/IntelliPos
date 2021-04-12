@@ -60,8 +60,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def locked_out(self):
-        return self.logon_attempts > settings.USER_ALLOWED_LOGON_ATTEMPTS /
-        and cache.has_key(self)
+        return self.logon_attempts > settings.USER_ALLOWED_LOGON_ATTEMPTS and \
+        cache.has_key(self)
 
 
     def __str__(self):
