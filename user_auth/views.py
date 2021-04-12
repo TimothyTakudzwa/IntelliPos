@@ -5,6 +5,10 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django.conf import settings
 from dj_rest_auth import views
+from dj_rest_auth.utils import jwt_encode
+from dj_rest_auth.app_settings import create_token
+
+
 
 from .two_factor_auth import OTP
 from .helper_functions import send_otp
