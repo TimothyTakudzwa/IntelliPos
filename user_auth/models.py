@@ -1,4 +1,7 @@
 from django.db import models
+from django.conf import settings
+from django.core.cache import cache
+
 from django.contrib.auth.models import (
     AbstractBaseUser, 
     BaseUserManager,
@@ -47,10 +50,19 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_merchant_admin = models.BooleanField(default=False)
+    logon_attempts = models.IntegerField(
+        default=0
+    )
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+    @property
+    def locked_out(self):
+        return self.logon_attempts > settings.USER_ALLOWED_LOGON_ATTEMPTS /
+        and cache.has_key('locked_out_user')
+
 
 # class User(AbstractUser):
     #     """
@@ -138,30 +150,32 @@ class User(AbstractBaseUser, PermissionsMixin):
     #         return False, 'Wrong username / password'
 
 
-# class PasswordHistory(models.Model):
-#     """
-#     Model Class to save the last 4 password of a merchant
-#     """
-#     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
-#     password_hash = models.BinaryField(blank=True, null=True)
-#     date = models.DateField(default=timezone.now)
 
-#     @classmethod
-#     def get_user_history(cls, user):
-#         return cls.objects.filter(user=user).order_by('-date')[:4].all()
+class PasswordHistory(models.Model):
+    """
+    Password entries created each time the user changes their password
+    """
+    password_hash = models.BinaryField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_created = models.DateField(default=timezone.now)
 
-#     @staticmethod
-#     def password_used(user, password):
-#         history = PasswordHistory.get_user_history(user)
-#         if history is not None:
-#             PasswordHistory(password_hash=password, user=user).save()
-#             return False
-#         else:
-#             for inst in history:
-#                 dek = KMSCLIENTAPI().request_dek('token_key')
-#                 plain_text = NISTApprovedCryptoAlgo['AES'].value.handle_ct(dek, inst.password)
-#                 if plain_text == password:
-#                     return True
-#                 else:
-#                     PasswordHistory(password_hash=inst.password, user=user).save()
-#                     return False
+    
+    # @classmethod
+    # def get_user_history(cls, user):
+    #     return cls.objects.filter(user=user).order_by('-date')[:4].all()
+
+    # @staticmethod
+    # def password_used(user, password):
+    #     history = PasswordHistory.get_user_history(user)
+    #     if history is not None:
+    #         PasswordHistory(password_hash=password, user=user).save()
+    #         return False
+    #     else:
+    #         for inst in history:
+    #             dek = KMSCLIENTAPI().request_dek('token_key')
+    #             plain_text = NISTApprovedCryptoAlgo['AES'].value.handle_ct(dek, inst.password)
+    #             if plain_text == password:
+    #                 return True
+    #             else:
+    #                 PasswordHistory(password_hash=inst.password, user=user).save()
+    #                 return False

@@ -5,6 +5,7 @@ from allauth.account import views
 from .views import *
 
 urlpatterns = [
+    path('auth/login/', LoginView.as_view(), name='login'),
     path('auth/', include('dj_rest_auth.urls')),
     path('auth/dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('auth/account_verification/<phone>', AccountVerification.as_view()),

@@ -183,7 +183,10 @@ REST_USE_JWT = True
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'user_auth.serializers.UserDetailsSerializer',
+        'LOGIN_SERIALIZER': 'user_auth.serializers.LoginSerializer',
 }
+
+
 
 # JWT 
 JWT_AUTH_COOKIE = 'access_token'
@@ -235,5 +238,10 @@ KMS_PASSWORD = env('KMS_PASSWORD')
 
 # OTP
 OTP_LENGTH = 6
-OTP_TTL = 180
+OTP_TTL = 60 * 3
 OTP_DIGITS = '0123456789'
+
+
+# User Lockout
+USER_ALLOWED_LOGON_ATTEMPTS = 6
+USER_LOCKOUT_DURATION = 60 * 30
