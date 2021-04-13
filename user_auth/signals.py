@@ -1,3 +1,4 @@
+import logging
 from django.db.models.signals import post_save
 from django.dispatch import Signal, receiver
 from allauth.account.signals import user_logged_in
@@ -12,15 +13,19 @@ user_failed_login = Signal(providing_args=["email"])
 
 
 @receiver(user_failed_login)
-def increment_logon_attempts(sender, email, **kwargs):
+def hanlde_logon_attempt(sender, email, **kwargs):
     try:
         user = User.objects.get(email__exact=email)
     except User.DoesNotExist as e:
         logger.warn(e)
         return
 
-    user.logon_attempts += 1
-    user.save()
+    if  user.locked_out:
+        return
+    else:
+        user.logon_attempts += 1
+        user.save()
+
     if user.logon_attempts > settings.USER_ALLOWED_LOGON_ATTEMPTS:
         cache.set(
             user,
