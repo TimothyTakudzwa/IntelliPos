@@ -1,4 +1,5 @@
 import logging
+import datetime
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.permissions import AllowAny
@@ -19,9 +20,10 @@ logger = logging.getLogger('gunicorn.error')
 
 
 class LoginView(views.LoginView):
-    
 
-    def get_response(self):
+    def verify_access(self):
+        today = datetime.datetime.now()
+        delta = today - self.user.password_creation_date
         if self.user.locked_out:
             data = {
                 'error': {
@@ -31,8 +33,18 @@ class LoginView(views.LoginView):
             logger.warn(data)
             return Response(data, status.HTTP_403_FORBIDDEN)
 
+        elif delta.days > settings.PASSWORD_LIFETIME_IN_DAYS:
+            data = {
+                'error': {
+                    'code':'006',
+                    'message':f'Password has expired, please set a new one'}
+            }
+            return Response(data, status.HTTP_403_FORBIDDEN)
+       
+    
+    def get_response(self):
+        self.verify_access()
         serializer_class = self.get_response_serializer()
-
         access_token_expiration = None
         refresh_token_expiration = None
         if getattr(settings, 'REST_USE_JWT', False):
@@ -52,10 +64,12 @@ class LoginView(views.LoginView):
                 data['refresh_token_expiration'] = refresh_token_expiration
 
             serializer = serializer_class(instance=data,
-                                          context=self.get_serializer_context())
+                context=self.get_serializer_context()
+            )
         else:
             serializer = serializer_class(instance=self.token,
-                                          context=self.get_serializer_context())
+                context=self.get_serializer_context()
+            )
 
         response = Response(serializer.data, status=status.HTTP_200_OK)
         if getattr(settings, 'REST_USE_JWT', False):
@@ -72,7 +86,7 @@ class AccountVerification(APIView):
     def get(self, request, *args, **kwargs):
         phone = kwargs['phone']
         otp = OTP(phone).generate()
-        send_otp(phone)
+        send_otp(phone, otp)
         return Response()
  
 

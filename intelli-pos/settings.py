@@ -52,8 +52,8 @@ CACHES = {
 
 # Redis
 CACHE_TTL = 60 * 15
-CACHE_JWT_TTL = env('CACHE_JWT_TOKENS_TTL')
-CACHE_DEK_TTL = env('CACHE_DEK_TTL')
+CACHE_JWT_TTL = 60*10 # env('CACHE_JWT_TOKENS_TTL')
+CACHE_DEK_TTL = 60*10 #env('CACHE_DEK_TTL')
 
 # Application definition
 
@@ -150,6 +150,18 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    {
+        'NAME': 'user_auth.password_validation.NumeralValidator',
+    },
+    {
+        'NAME': 'user_auth.password_validation.UpperCaseValidator',
+    },
+    {
+        'NAME': 'user_auth.password_validation.LowerCaseValidator',
+    },
+    {
+        'NAME': 'user_auth.password_validation.SpecialCharacterValidator',
+    },
 ]
 
 # Internationalization
@@ -180,10 +192,11 @@ AUTH_USER_MODEL = 'user_auth.User'
 
 # Django Rest Auth
 REST_USE_JWT = True
-
+OLD_PASSWORD_FIELD_ENABLED = True
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'user_auth.serializers.UserDetailsSerializer',
-        'LOGIN_SERIALIZER': 'user_auth.serializers.LoginSerializer',
+    'LOGIN_SERIALIZER': 'user_auth.serializers.LoginSerializer',
+    'PASSWORD_CHANGE_SERIALIZER': 'user_auth.serializers.PasswordChangeSerializer',
 }
 
 
@@ -193,7 +206,7 @@ JWT_AUTH_COOKIE = 'access_token'
 JWT_AUTH_REFRESH_COOKIE = 'refresh_token'
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=7),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=30), # set to 15 mins
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=30),
 }
 
@@ -245,3 +258,7 @@ OTP_DIGITS = '0123456789'
 # User Lockout
 USER_ALLOWED_LOGON_ATTEMPTS = 6
 USER_LOCKOUT_DURATION = 60 * 30
+
+# Password
+PASSWORD_LAST_USED_ENTRIES = 4
+PASSWORD_LIFETIME_IN_DAYS = 30

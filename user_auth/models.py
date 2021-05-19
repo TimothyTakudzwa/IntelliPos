@@ -9,6 +9,7 @@ from django.contrib.auth.models import (
 )
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.db.models.query import QuerySet
 
 
 class UserManager(BaseUserManager):
@@ -53,6 +54,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     logon_attempts = models.IntegerField(
         default=0
     )
+    password_creation_date = models.DateField(default=timezone.now)
+
 
     objects = UserManager()
 
@@ -65,7 +68,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
     def __str__(self):
-         return self.email
+        return self.email
 
 
 # class User(AbstractUser):
@@ -153,15 +156,26 @@ class User(AbstractBaseUser, PermissionsMixin):
     #         user.save()
     #         return False, 'Wrong username / password'
 
+class PasswordManager(models.Manager):
+    def find_all_for(self, user: User) -> QuerySet:
+        queryset = self.get_queryset()
+        return queryset.filter(user=user).order_by('-date_created')[:settings.PASSWORD_LAST_USED_ENTRIES]
 
 
-class PasswordHistory(models.Model):
+class PasswordArchive(models.Model):
     """
-    Password entries created each time the user changes their password
+    Password archive for storing previously used passwords, 
+    created whenever the user changes their password
     """
-    password_hash = models.BinaryField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    password_hash = models.CharField(max_length=128)
+    user = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE,
+        related_name='password_history'
+        )
     date_created = models.DateField(default=timezone.now)
+    objects = PasswordManager()
+
 
     
     # @classmethod

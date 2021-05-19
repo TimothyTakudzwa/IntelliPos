@@ -1,3 +1,5 @@
+import datetime
+from django.contrib.auth.hashers import check_password
 from rest_framework import serializers, exceptions
 from rest_framework.exceptions import ValidationError
 from dj_rest_auth.registration.serializers import RegisterSerializer
@@ -9,7 +11,7 @@ try:
 except ImportError:
     from django.utils.translation import gettext_lazy as _
 
-from .models import User
+from .models import User, PasswordArchive
 from merchant.models import MerchantProfile
 from .signals import user_failed_login
 
@@ -45,6 +47,44 @@ class LoginSerializer(ra_serializers.LoginSerializer):
 
         attrs['user'] = user
         return attrs
+
+
+class PasswordChangeSerializer(ra_serializers.PasswordChangeSerializer):
+
+    def validate(self, attrs):
+        self.set_password_form = self.set_password_form_class(
+            user=self.user, data=attrs
+        )
+
+        if not self.set_password_form.is_valid():
+            raise serializers.ValidationError(self.set_password_form.errors)
+        # # Is password recently used?
+        # password_archive = PasswordArchive.objects.find_all_for(self.user)
+        # if any([check_password(attrs['new_password1'], entry.password_hash) for entry in password_archive]):
+        #     err_msg = _("Your new entered password was recently used. Please use a new password.")
+        #     raise serializers.ValidationError(err_msg)
+        return attrs
+
+    def validate_new_password1(self, value):
+        # Is password recently used?
+        password_archive = PasswordArchive.objects.find_all_for(self.user)
+        if any([check_password(value, entry.password_hash) for entry in password_archive]):
+            err_msg = _("Your new entered password was recently used. Please use a new password.")
+            raise serializers.ValidationError(err_msg)
+        return value
+
+
+    def save(self):
+        PasswordArchive.objects.create(                 # archive old password before changing to new password
+            password_hash=self.user.password, 
+            user=self.user
+        )
+        self.set_password_form.save()
+        if not self.logout_on_password_change:
+            from django.contrib.auth import update_session_auth_hash
+            update_session_auth_hash(self.request, self.user)
+
+        self.user.password_date_created = datetime.datetime.now()    # date when new password was created
 
 
     
