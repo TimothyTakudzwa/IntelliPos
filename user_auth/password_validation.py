@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 
 
-class DigitValidator:
+class NumeralValidator:
     def validate(self, password, user=None):
        if not any(char.isdigit() for char in password):
             raise ValidationError(
