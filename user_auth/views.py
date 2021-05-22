@@ -22,7 +22,7 @@ logger = logging.getLogger('gunicorn.error')
 class LoginView(views.LoginView):
 
     def verify_access(self):
-        today = datetime.datetime.now()
+        today = datetime.date.now()
         delta = today - self.user.password_creation_date
         if self.user.locked_out:
             data = {
