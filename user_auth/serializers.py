@@ -68,8 +68,9 @@ class PasswordChangeSerializer(ra_serializers.PasswordChangeSerializer):
     def validate_new_password1(self, value):
         # Is password recently used?
         password_archive = PasswordArchive.objects.find_all_for(self.user)
-        if any([check_password(value, entry.password_hash) for entry in password_archive]):
-            err_msg = _("Your new entered password was recently used. Please use a new password.")
+        password_check = check_password(value, self.user.password_hash)        
+        if any([check_password(value, entry.password_hash) for entry in password_archive]) or password_check:  
+            err_msg = _("Your new entered password was recently used. Please use a new password.")          
             raise serializers.ValidationError(err_msg)
         return value
 
