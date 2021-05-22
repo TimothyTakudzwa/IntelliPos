@@ -13,6 +13,6 @@ from BulkSmsApi.Client import Client
 
 def send_otp(phone_number, otp):
     bulksms = Client('MarlvinzW', 'd59160bf797bda487639aa53a6103b05')
-    message = f'<%23> ExampleApp: Your code is {otp} MoohrBwcY1d' 
+    message = f'<#> ExampleApp: Your code is {otp} MoohrBwcY1d' 
     bulksms.send(body=message, recipients=[phone_number])
     return ''
