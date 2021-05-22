@@ -66,7 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles', 
     'django.contrib.sites',   
-    'user_auth',
+    'user_auth.apps.UserAuthConfig',
     'merchant.apps.MerchantConfig',
     'rest_framework',
     'dj_rest_auth',
@@ -125,7 +125,7 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DATABASE_NAME'),
+        'NAME':  env('DATABASE_NAME'),
         'USER': env('USER'),
         'PASSWORD': env('PASSWORD'),
         'HOST': env('HOST'),
@@ -262,3 +262,5 @@ USER_LOCKOUT_DURATION = 60 * 30
 # Password
 PASSWORD_LAST_USED_ENTRIES = 4
 PASSWORD_LIFETIME_IN_DAYS = 30
+
+SITE_ID=1

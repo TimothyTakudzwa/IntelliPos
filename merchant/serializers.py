@@ -41,7 +41,7 @@ class OperatorProfileSerializer(serializers.ModelSerializer):
         user = self.context.get("request").user
         merchant = user.merchant_profile
         user_data = validated_data.pop('user')
-        user = User.objects.create_user(**user_data, password='')
+        user = User.objects.create_user(**user_data, password='') # set is_active to False
         return OperatorProfile.objects.create(
             user=user, 
             merchant=merchant,
