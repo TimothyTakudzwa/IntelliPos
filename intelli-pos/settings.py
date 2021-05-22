@@ -80,10 +80,10 @@ INSTALLED_APPS = [
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'NFC Accounts <timothytakudzwa@gmail.com>'
+DEFAULT_FROM_EMAIL = 'IntelliPOS Accounts <intelliposzw@gmail.com>'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'timothytakudzwa@gmail.com'
-EMAIL_HOST_PASSWORD = 'timmytaku95#'
+EMAIL_HOST_USER = 'intelliposzw@gmail.com'
+EMAIL_HOST_PASSWORD = 'intellipos12345#'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
