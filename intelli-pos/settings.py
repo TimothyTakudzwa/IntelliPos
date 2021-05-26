@@ -197,6 +197,7 @@ REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'user_auth.serializers.UserDetailsSerializer',
     'LOGIN_SERIALIZER': 'user_auth.serializers.LoginSerializer',
     'PASSWORD_CHANGE_SERIALIZER': 'user_auth.serializers.PasswordChangeSerializer',
+    'PASSWORD_RESET_CONFIRM_SERIALIZER': 'user_auth.serializers.PasswordResetConfirmSerializer',
 }
 
 

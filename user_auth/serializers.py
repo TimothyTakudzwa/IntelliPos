@@ -2,10 +2,18 @@ import datetime
 from django.contrib.auth.hashers import check_password
 from rest_framework import serializers, exceptions
 from rest_framework.exceptions import ValidationError
-from dj_rest_auth.registration.serializers import RegisterSerializer
-from allauth.account import app_settings as allauth_settings
 from dj_rest_auth import serializers as ra_serializers
 from django.conf import settings
+
+
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode as uid_decoder
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode as uid_decoder
 try:
     from django.utils.translation import gettext_lazy as _
 except ImportError:
@@ -14,6 +22,10 @@ except ImportError:
 from .models import User, PasswordArchive
 from merchant.models import MerchantProfile
 from .signals import user_failed_login
+
+
+# Get the UserModel
+UserModel = get_user_model()
 
 class UserDetailsSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
@@ -58,11 +70,6 @@ class PasswordChangeSerializer(ra_serializers.PasswordChangeSerializer):
 
         if not self.set_password_form.is_valid():
             raise serializers.ValidationError(self.set_password_form.errors)
-        # # Is password recently used?
-        # password_archive = PasswordArchive.objects.find_all_for(self.user)
-        # if any([check_password(attrs['new_password1'], entry.password_hash) for entry in password_archive]):
-        #     err_msg = _("Your new entered password was recently used. Please use a new password.")
-        #     raise serializers.ValidationError(err_msg)
         return attrs
 
     def validate_new_password1(self, value):
@@ -88,5 +95,33 @@ class PasswordChangeSerializer(ra_serializers.PasswordChangeSerializer):
         self.user.password_date_created = datetime.datetime.now()    # date when new password was created
 
 
-    
+class PasswordResetConfirmSerializer(ra_serializers.PasswordResetConfirmSerializer):
 
+    def validate(self, attrs):
+
+        # Decode the uidb64 to uid to get User object
+        try:
+            uid = force_str(uid_decoder(attrs['uid']))
+            self.user = UserModel._default_manager.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+            raise ValidationError({'uid': ['Invalid value']})
+
+        if not default_token_generator.check_token(self.user, attrs['token']):
+            raise ValidationError({'token': ['Invalid value']})
+
+        self.custom_validation(attrs)
+        # Construct SetPasswordForm instance
+        self.set_password_form = self.set_password_form_class(
+            user=self.user, data=attrs,
+        )
+        if not self.set_password_form.is_valid():
+            raise serializers.ValidationError(self.set_password_form.errors)
+
+        # Is password recently used?
+        password_archive = PasswordArchive.objects.find_all_for(self.user)
+        password_check = check_password(attrs['new_password1'], self.user.password)        
+        if any([check_password(attrs['new_password1'], entry.password_hash) for entry in password_archive]) or password_check:  
+            err_msg = _("Your new entered password was recently used. Please use a new password.")          
+            raise serializers.ValidationError({'new_password':err_msg})
+
+        return attrs
