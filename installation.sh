@@ -13,7 +13,7 @@ sudo make altinstall
 sudo rm -f /opt/Python-3.8.7.tgz
 PATH=$PATH:/usr/local/bin
 #Install Virtual Env
-Pip3 install virtualenv
+pip3 install virtualenv
 VENV=/home/intellipos/IntelliPos/venv
 virtualenv -p /usr/local/bin/python3.8 $VENV
 source $VENV/bin/activate
