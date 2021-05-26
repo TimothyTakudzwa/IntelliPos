@@ -29,5 +29,5 @@ source $VENV/bin/activate
 #Install Application Requirements
 echo -e "******************************************************************************************\n\n"
 echo -e "Installing Application Requirements\n\n"
-echo -e "******************************************************************************************"
+echo -e "\n\n******************************************************************************************"
 cd /home/intellipos/IntelliPos/ && pip3 install -r requirements.txt
