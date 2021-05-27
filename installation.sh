@@ -6,6 +6,7 @@ sudo yum -y update
 sudo yum -y install yum-utils
 sudo yum -y groupinstall development
 sudo yum install gcc openssl-devel bzip2-devel libffi-devel
+sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 echo -e "******************************************************************************************\n\n"
 echo -e "Installing Supervisor"
 echo -e "\n\n******************************************************************************************"
