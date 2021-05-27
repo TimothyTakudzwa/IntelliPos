@@ -24,7 +24,7 @@ echo -e "\n\n*******************************************************************
 #Install Virtual Env
 pip3 install virtualenv
 VENV=/home/intellipos/IntelliPos/venv
-virtualenv -p /usr/local/bin/python3.8 $VENV
+virtualenv -p /usr/local/bin/python3.8 $VENV --reset-app-data
 source $VENV/bin/activate
 #Install Application Requirements
 echo -e "******************************************************************************************\n\n"
