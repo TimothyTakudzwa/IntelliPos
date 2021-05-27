@@ -6,6 +6,18 @@ sudo yum -y update
 sudo yum -y install yum-utils
 sudo yum -y groupinstall development
 sudo yum install gcc openssl-devel bzip2-devel libffi-devel
+echo -e "******************************************************************************************\n\n"
+echo -e "Installing Supervisor"
+echo -e "\n\n******************************************************************************************"
+sudo yum install supervisor
+sudo systemctl start supervisord
+sudo systemctl enable supervisord
+echo -e "******************************************************************************************\n\n"
+echo -e "Installing Nginx"
+echo -e "\n\n******************************************************************************************"
+sudo yum install nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
 #Get and Instal Python 3.8
 echo -e "******************************************************************************************\n\n"
 echo -e "Installing Python"
