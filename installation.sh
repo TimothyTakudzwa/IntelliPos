@@ -8,8 +8,8 @@ sudo yum -y groupinstall development
 sudo yum install gcc openssl-devel bzip2-devel libffi-devel
 #Get and Instal Python 3.8
 echo -e "******************************************************************************************\n\n"
-echo -e "\n\nInstalling Python"
-echo -e "******************************************************************************************"
+echo -e "Installing Python"
+echo -e "\n\n******************************************************************************************"
 sudo yum -y install wget
 cd /opt && sudo wget https://www.python.org/ftp/python/3.8.7/Python-3.8.7.tgz
 sudo tar xzf Python-3.8.7.tgz
@@ -19,8 +19,8 @@ sudo make altinstall
 sudo rm -f /opt/Python-3.8.7.tgz
 PATH=$PATH:/usr/local/bin
 echo -e "******************************************************************************************\n\n"
-echo -e "\n\nInstalling Virtual Environment"
-echo -e "******************************************************************************************"
+echo -e "Installing Virtual Environment"
+echo -e "\n\n******************************************************************************************"
 #Install Virtual Env
 pip3 install virtualenv
 VENV=/home/intellipos/IntelliPos/venv
