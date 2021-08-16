@@ -1,10 +1,11 @@
 from django.contrib import admin
-from .models import Transaction, User, IntelliPos, Merchant, Account
 
-admin.site.register(Merchant)
-admin.site.register(User)
-admin.site.register(IntelliPos)
+from .models import Transaction, POSTerminal, MerchantProfile, BankAccount
+
+admin.site.register(MerchantProfile)
+admin.site.register(POSTerminal)
 admin.site.register(Transaction)
-admin.site.register(Account)
+admin.site.register(BankAccount)
+
 
 # Register your models here.
