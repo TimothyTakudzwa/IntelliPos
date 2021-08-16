@@ -19,7 +19,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['18.206.81.87', '127.0.0.1']
+ALLOWED_HOSTS = ['18.206.81.87', '127.0.0.1', '198.211.99.116']
 
 LOGGING = {
     'version': 1,
