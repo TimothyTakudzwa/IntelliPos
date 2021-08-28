@@ -1,5 +1,6 @@
 import logging
 import merchant
+from django.db.models import Q
 
 from django.conf import settings
 from django.db import IntegrityError
@@ -93,7 +94,7 @@ class POSTerminalViewSet(viewsets.ModelViewSet):
         return Response(data)
 
 
-class PostTransactionsView(APIView):
+class TransactionsView(APIView):
     serializer_class = DummyTransactionSerializer
     parser_classes = [JSONParser]
     renderer_classes = [JSONRenderer]
@@ -137,6 +138,35 @@ class PostTransactionsView(APIView):
             user_merchant = MerchantProfile.objects.filter(user=user.id).first()
             
             transaction = DummyTransaction.objects.filter(merchant=user_merchant)
+            serializer = DummyTransactionSerializer(transaction, many=True)
+            if serializer.is_valid:
+                return Response(serializer.data)
+            else:
+                """
+                SERIALIZER ERRORS
+                """
+                return JsonResponse(status=status.HTTP_406_NOT_ACCEPTABLE, data={"errors": serializer.errors})
+        except Exception as e:
+            """
+            EXCEPTION
+            """
+            return JsonResponse(data={'error': e}, status=status.HTTP_400_BAD_REQUEST)
+
+class GetTransactionsView(APIView):
+    serializer_class = DummyTransactionSerializer
+    parser_classes = [JSONParser]
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, search):
+        try:
+
+            user = request.user
+            user_merchant = MerchantProfile.objects.filter(user=user.id).first()
+            
+            lookups= Q(reference__icontains=search) | Q(status__icontains=search) | Q(selected_card__icontains=search)
+            
+            transaction = DummyTransaction.objects.filter(lookups, merchant=user_merchant).distinct()
+            # transaction = DummyTransaction.objects.filter(merchant=user_merchant)
             serializer = DummyTransactionSerializer(transaction, many=True)
             if serializer.is_valid:
                 return Response(serializer.data)
