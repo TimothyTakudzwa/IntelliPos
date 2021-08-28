@@ -1,5 +1,5 @@
 import datetime
-
+import uuid
 import bcrypt
 from django.conf import settings
 from django.db import models
@@ -131,4 +131,18 @@ class Transaction(models.Model):
         on_delete=models.SET_NULL, 
         null=True,
         related_name='transactions'
+    )
+
+
+class DummyTransaction(models.Model):
+    ID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    date = models.DateField(default=timezone.now)
+    amount = models.FloatField(default=0.00, blank=True)
+    reference = models.CharField(max_length=255, default='', unique=True)
+    status = models.CharField(max_length=255, default='', blank=True)
+    selected_card = models.CharField(max_length=255, default='', blank=True)
+    merchant = models.ForeignKey(
+        MerchantProfile, 
+        on_delete=models.CASCADE,
+        related_name='dummy_transaction'
     )
