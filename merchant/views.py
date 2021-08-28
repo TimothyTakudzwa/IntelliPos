@@ -129,7 +129,7 @@ class TransactionsView(APIView):
             """
             EXCEPTION
             """
-            return JsonResponse(data={'error': e}, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse(data={'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
         try:
@@ -150,7 +150,7 @@ class TransactionsView(APIView):
             """
             EXCEPTION
             """
-            return JsonResponse(data={'error': e}, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse(data={'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 class GetTransactionsView(APIView):
     serializer_class = DummyTransactionSerializer
@@ -179,4 +179,4 @@ class GetTransactionsView(APIView):
             """
             EXCEPTION
             """
-            return JsonResponse(data={'error': e}, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse(data={'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
