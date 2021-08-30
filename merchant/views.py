@@ -15,13 +15,18 @@ from rest_framework.views import APIView
 from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
 
+import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from .models import *
 from .serializers import *
 from .permissions import IsMerchantAdminUser, IsOwner
+from intelli_sms_gateway.client import Client
 
 
 logger = logging.getLogger('gunicorn.error')
 
+client = Client('mgunityrone@gmail.com', '123abc!!!')
 
 class MerchantProfileViewSet(viewsets.ModelViewSet):
     """
@@ -170,6 +175,86 @@ class GetTransactionsView(APIView):
             serializer = DummyTransactionSerializer(transaction, many=True)
             if serializer.is_valid:
                 return Response(serializer.data)
+            else:
+                """
+                SERIALIZER ERRORS
+                """
+                return JsonResponse(status=status.HTTP_406_NOT_ACCEPTABLE, data={"errors": serializer.errors})
+        except Exception as e:
+            """
+            EXCEPTION
+            """
+            return JsonResponse(data={'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+class EmailTransactionsView(APIView):
+    serializer_class = DummyTransactionSerializer
+    parser_classes = [JSONParser]
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, reference):
+        try:
+
+            user = request.user
+            user_merchant = MerchantProfile.objects.filter(user=user.id).first()
+            
+            transaction = DummyTransaction.objects.filter(reference=reference, merchant=user_merchant).first()
+            # transaction = DummyTransaction.objects.filter(merchant=user_merchant)
+            serializer = DummyTransactionSerializer(transaction, many=True)
+            if serializer.is_valid:
+                import smtplib, ssl
+
+                port = 465  # For SSL
+                smtp_server = "smtp.gmail.com"
+                sender_email = "zulunigelbintelliposlive@gmail.com"  # Enter your address
+                # zulunigelbintelliposlive
+                receiver_email = user.email  # Enter receiver address
+                password = "jikatino"
+
+                message = MIMEMultipart("alternative")
+                message["Subject"] = f"Receipt With Rerefere: {reference}"
+                message["From"] = sender_email
+                message["To"] = receiver_email
+
+                # Create the plain-text and HTML version of your message
+               
+                html = """\
+                <html>
+                <body>
+                    <p>Good day,<br>
+                    <b>Your transaction details<b/><br>
+                    Reference Number: """ + reference + """<br></br>
+                    Amount: """ + str(transaction.amount) + """<br></br>
+                    Card Used: """ + transaction.selected_card + """<br></br>
+                    Status: """ + transaction.status + """<br></br>
+                    Date: """ + str(transaction.date) + """<br></br>
+
+                    </p>
+                </body>
+                </html>
+                """
+
+                # Turn these into plain/html MIMEText objects
+                part2 = MIMEText(html, "html")
+
+                # Add HTML/plain-text parts to MIMEMultipart message
+                # The email client will try to render the last part first
+                message.attach(part2)
+
+                # Create secure connection with server and send email
+                context = ssl.create_default_context()
+                with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+                    server.login(sender_email, password)
+                    server.sendmail(
+                        sender_email, receiver_email, message.as_string()
+                    )
+
+
+                message = f"Good day, Your transaction details. Reference Number: {reference}. Amount: {str(transaction.amount)} Card Used: {transaction.selected_card } Status: {transaction.status} Date: {str(transaction.date)}"
+                phone = str(user_merchant.phone_number)
+                phone_number = phone.replace("+", "")
+                client.send_single_sms(message, phone_number, 'IntelliPos')
+
+                return JsonResponse(status=status.HTTP_200_OK, data={"message": "email sent"})
             else:
                 """
                 SERIALIZER ERRORS
