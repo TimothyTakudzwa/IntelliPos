@@ -66,6 +66,7 @@ class SearchProductView(APIView):
     parser_classes = [JSONParser]
     renderer_classes = [JSONRenderer]
 
+    permission_classes = [IsAuthenticated]
     def get(self, request, code):
         try:
             print(code)
