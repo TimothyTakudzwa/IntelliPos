@@ -68,7 +68,7 @@ class POSTerminalSerializer(serializers.ModelSerializer):
 
 class DummyTransactionSerializer(serializers.ModelSerializer):
     # date = serializers.DateField()
-    reference = serializers.FloatField(required=True)
+    reference = serializers.CharField(required=True)
     amount = serializers.FloatField(required=True)
     status = serializers.CharField(required=True)
     selected_card = serializers.CharField(required=True)
