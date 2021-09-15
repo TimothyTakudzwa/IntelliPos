@@ -157,6 +157,29 @@ class TransactionsView(APIView):
             """
             return JsonResponse(data={'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
+
+class TransactionUserView(APIView):
+    serializer_class = DummyTransactionSerializer
+    parser_classes = [JSONParser]
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request):
+        try:
+
+            user = self.request.user
+            merchant = user.merchant_profile
+            print(merchant.id)
+
+            merchant_id = {
+                "merchant_id": merchant.id
+            }
+            return Response(merchant_id)
+        except Exception as e:
+            """
+            EXCEPTION
+            """
+            return JsonResponse(data={'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 class GetTransactionsView(APIView):
     serializer_class = DummyTransactionSerializer
     parser_classes = [JSONParser]

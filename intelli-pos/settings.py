@@ -68,7 +68,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',   
     'user_auth.apps.UserAuthConfig',
     'merchant.apps.MerchantConfig',
-    'product.apps.ProductConfig',
     'rest_framework',
     'dj_rest_auth',
     'django_filters',
