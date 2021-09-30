@@ -168,10 +168,11 @@ class TransactionUserView(APIView):
 
             user = self.request.user
             merchant = user.merchant_profile
-            print(merchant.id)
+            print(user.id)
 
             merchant_id = {
-                "merchant_id": merchant.id
+                "merchant_id": merchant.id,
+                "pk": user.id
             }
             return Response(merchant_id)
         except Exception as e:
