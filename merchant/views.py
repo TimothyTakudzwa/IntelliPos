@@ -168,11 +168,16 @@ class TransactionUserView(APIView):
 
             user = self.request.user
             merchant = user.merchant_profile
-            print(user.id)
 
+            queryset = OperatorProfile.objects.all()
+            print(user.id)
+            operator = queryset.filter(merchant=user.merchant_profile, user=user.id).first()
+
+            print("opetator", operator.pk)
             merchant_id = {
                 "merchant_id": merchant.id,
-                "pk": user.id
+                "user_id": user.id,
+                "pk": operator.pk
             }
             return Response(merchant_id)
         except Exception as e:
