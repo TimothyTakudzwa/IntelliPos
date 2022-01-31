@@ -66,24 +66,24 @@ class POSTerminalSerializer(serializers.ModelSerializer):
         return POSTerminal.objects.create(merchant=merchant, **validated_data)
 
 
-class DummyTransactionSerializer(serializers.ModelSerializer):
-    # date = serializers.DateField()
-    reference = serializers.CharField(required=True)
-    amount = serializers.FloatField(required=True)
-    status = serializers.CharField(required=True)
-    selected_card = serializers.CharField(required=True)
-    class Meta:
-        model = DummyTransaction
-        fields = [
-            'pk',
-            'date',
-            'amount',
-            'reference',
-            'status',
-            'selected_card',
-        ]
-        read_only_fields = fields
+# class DummyTransactionSerializer(serializers.ModelSerializer):
+#     # date = serializers.DateField()
+#     reference = serializers.CharField(required=True)
+#     amount = serializers.FloatField(required=True)
+#     status = serializers.CharField(required=True)
+#     selected_card = serializers.CharField(required=True)
+#     class Meta:
+#         model = DummyTransaction
+#         fields = [
+#             'pk',
+#             'date',
+#             'amount',
+#             'reference',
+#             'status',
+#             'selected_card',
+#         ]
+#         read_only_fields = fields
 
-    def create(self, validated_data):
-        return DummyTransactionSerializer(**validated_data)
+#     def create(self, validated_data):
+#         return DummyTransactionSerializer(**validated_data)
   

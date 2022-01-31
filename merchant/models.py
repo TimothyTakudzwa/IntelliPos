@@ -118,31 +118,17 @@ class POSTerminal(models.Model):
             self.operator_profile = None
 
 
-class Transaction(models.Model):
-    date = models.DateField(default=timezone.now)
-    sender_account = models.CharField(max_length=30, default='', blank=True)
-    receiver_account = models.CharField(max_length=30, default='', blank=True)
-    destination_bank = models.CharField(max_length=50, default='', blank=True)
-    amount = models.FloatField(default=0.00, blank=True)
-    currency = models.CharField(max_length=255, default='USD', blank=True)
-    reference = models.CharField(max_length=255, default='', blank=True)
-    pos_terminal = models.ForeignKey(
-        POSTerminal, 
-        on_delete=models.SET_NULL, 
-        null=True,
-        related_name='transactions'
-    )
-
-
-class DummyTransaction(models.Model):
-    ID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    date = models.DateField(default=timezone.now)
-    amount = models.FloatField(default=0.00, blank=True)
-    reference = models.CharField(max_length=255, default='', unique=True)
-    status = models.CharField(max_length=255, default='', blank=True)
-    selected_card = models.CharField(max_length=255, default='', blank=True)
-    merchant = models.ForeignKey(
-        MerchantProfile, 
-        on_delete=models.CASCADE,
-        related_name='dummy_transaction'
-    )
+# class Transaction(models.Model):
+#     date = models.DateField(default=timezone.now)
+#     sender_account = models.CharField(max_length=30, default='', blank=True)
+#     receiver_account = models.CharField(max_length=30, default='', blank=True)
+#     destination_bank = models.CharField(max_length=50, default='', blank=True)
+#     amount = models.FloatField(default=0.00, blank=True)
+#     currency = models.CharField(max_length=255, default='USD', blank=True)
+#     reference = models.CharField(max_length=255, default='', blank=True)
+#     pos_terminal = models.ForeignKey(
+#         POSTerminal, 
+#         on_delete=models.SET_NULL, 
+#         null=True,
+#         related_name='transactions'
+#     )
